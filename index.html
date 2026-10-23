@@ -4,17 +4,16 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Naufal Kaffah — Business Development &amp; Operations</title>
-  <meta name="description" content="Naufal Kaffah — Business Development & Operations professional based in Cikarang, Indonesia. Data-literate, quick to adopt AI and automation, and skilled at clear business communication.">
+  <meta name="description" content="Naufal Kaffah — Business Development & Operations professional based in Cikarang, Indonesia. Grow it. Run it. Automate it.">
   <meta name="author" content="Naufal Kaffah">
-  <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#0B1220" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#FFFFFF">
 
   <!-- Ganti "naufal-kaffah.pages.dev" dengan alamat situs Anda setelah deploy -->
   <link rel="canonical" href="https://naufal-kaffah.pages.dev/">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://naufal-kaffah.pages.dev/">
   <meta property="og:title" content="Naufal Kaffah — Business Development & Operations">
-  <meta property="og:description" content="Data-literate business development and operations generalist who uses AI and automation to work faster and communicates clearly.">
+  <meta property="og:description" content="Grow it. Run it. Automate it. A business development and operations generalist who uses data and AI to work faster.">
   <meta property="og:image" content="https://naufal-kaffah.pages.dev/assets/img/og-image.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -23,22 +22,20 @@
 
   <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 
-  <!-- Set theme before first paint to avoid a colour flash -->
+  <!-- Light by default; a saved choice wins. Set before first paint to avoid a colour flash. -->
   <script>
     (function () {
       var t;
       try { t = localStorage.getItem("theme"); } catch (e) {}
-      if (t !== "light" && t !== "dark") {
-        t = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-      }
-      document.documentElement.setAttribute("data-theme", t);
+      document.documentElement.setAttribute("data-theme", t === "dark" ? "dark" : "light");
       document.documentElement.classList.add("js");
     })();
   </script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap">
+  <link rel="preload" as="image" href="assets/img/profile.png">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -55,10 +52,9 @@
 
       <ul class="nav__links" id="nav-menu">
         <li><a href="#about">About</a></li>
+        <li><a href="#journey">Journey</a></li>
+        <li><a href="#projects">Lab</a></li>
         <li><a href="#skills">Skills</a></li>
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="#experience">Experience</a></li>
-        <li><a href="#certifications">Certifications</a></li>
         <li><a href="#contact">Contact</a></li>
         <li class="nav__menu-cv"><a class="btn btn--primary" href="assets/cv.pdf" download="Naufal_Kaffah_CV.pdf">Download CV</a></li>
       </ul>
@@ -80,375 +76,330 @@
   <main id="main">
     <!-- ============ HERO ============ -->
     <section class="hero" id="top">
-      <div class="hero__bg" aria-hidden="true">
-        <div class="hero__floor"></div>
-        <span class="hero__glow hero__glow--1"></span>
-        <span class="hero__glow hero__glow--2"></span>
-      </div>
-
       <div class="container hero__grid">
-        <div class="hero__text">
-          <p class="eyebrow hero-in" style="--d:1">
+        <div class="hero__copy">
+          <p class="hero__status in" style="--d:0">
             <span class="status-dot" aria-hidden="true"></span>
             Open to Business Development &amp; staff roles
           </p>
-          <h1 class="hero__name" data-split>Naufal Kaffah</h1>
-          <p class="hero__role hero-in" style="--d:4">Business Development &amp; Operations</p>
-          <p class="hero__pitch hero-in" style="--d:5">I turn data into decisions, use AI and automation to remove repetitive work, and produce business materials that are clear, accurate and ready to present.</p>
-          <div class="hero__cta hero-in" style="--d:6">
-            <a class="btn btn--primary" href="#projects">View My Work</a>
-            <a class="btn btn--ghost" href="assets/cv.pdf" download="Naufal_Kaffah_CV.pdf">
+
+          <!-- Motto: tiap baris muncul bergantian -->
+          <p class="motto">
+            <span class="motto__line" style="--d:1"><span>Grow it.</span></span>
+            <span class="motto__line" style="--d:2"><span>Run it.</span></span>
+            <span class="motto__line motto__line--accent" style="--d:3"><span>Automate it.</span></span>
+          </p>
+
+          <h1 class="hero__name in" style="--d:5">Naufal Kaffah <span>Business Development &amp; Operations</span></h1>
+          <p class="hero__pitch in" style="--d:6">I find the opportunities, keep the operations running, and use data and AI to automate the work that slows a team down.</p>
+
+          <div class="hero__cta in" style="--d:7">
+            <a class="btn btn--primary btn--lg" href="#journey">See my journey</a>
+            <a class="btn btn--ghost btn--lg" href="assets/cv.pdf" download="Naufal_Kaffah_CV.pdf">
               <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>
               Download CV
             </a>
           </div>
-          <p class="hero__location hero-in" style="--d:7">
-            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
-            Cikarang, Bekasi, West Java, Indonesia
-          </p>
         </div>
 
-        <div class="hero__visual hero-in" style="--d:2">
-          <div class="orbit" title="Drag to spin">
-            <canvas class="orbit__canvas orbit__canvas--back" aria-hidden="true"></canvas>
-            <div class="orbit__avatar avatar">
-              <span class="avatar__monogram" aria-hidden="true">NK</span>
+        <div class="hero__visual in" style="--d:2">
+          <!-- Foto: assets/img/profile.png (latar transparan, 520×792). Kepala sengaja keluar dari panel biru.
+               Jika file tidak ada, panel menampilkan monogram "NK". -->
+          <div class="portrait">
+            <div class="portrait__panel" aria-hidden="true">
+              <span class="portrait__ring"></span>
+              <span class="portrait__mono">NK</span>
             </div>
-            <!-- Foto profil: assets/img/profile.png (latar transparan, rasio 480×558). Kepala sengaja menyembul di atas bola.
-                 Jika file tidak ada, monogram "NK" tampil otomatis. -->
-            <div class="orbit__portrait">
-              <img src="assets/img/profile.png" alt="Portrait of Naufal Kaffah" width="480" height="558" fetchpriority="high" onerror="this.parentNode.remove();">
-            </div>
-            <canvas class="orbit__canvas orbit__canvas--front" aria-hidden="true"></canvas>
-            <span class="orbit__chip" data-ring="0" data-angle="0" aria-hidden="true">Data</span>
-            <span class="orbit__chip" data-ring="0" data-angle="180" aria-hidden="true">AI &amp; Automation</span>
-            <span class="orbit__chip" data-ring="1" data-angle="90" aria-hidden="true">Business Dev</span>
-            <span class="orbit__chip" data-ring="1" data-angle="270" aria-hidden="true">Operations</span>
+            <img class="portrait__img" src="assets/img/profile.png" alt="Portrait of Naufal Kaffah" width="520" height="792" fetchpriority="high" onerror="this.closest('.portrait').classList.add('portrait--empty');this.remove();">
+            <span class="portrait__tag portrait__tag--1" data-depth="18" aria-hidden="true"><strong>5+</strong> years of experience</span>
+            <span class="portrait__tag portrait__tag--2" data-depth="-14" aria-hidden="true"><span class="status-dot"></span> Builds AI agents</span>
+            <span class="portrait__tag portrait__tag--3" data-depth="10" aria-hidden="true">Cikarang, Indonesia</span>
           </div>
         </div>
       </div>
 
-      <a class="hero__scroll" href="#about" aria-label="Scroll to About">
-        <span class="hero__mouse" aria-hidden="true"></span>
+      <a class="hero__scroll" href="#about">
+        <span>Scroll</span>
+        <span class="hero__scroll-line" aria-hidden="true"></span>
       </a>
     </section>
 
-    <!-- ============ ABOUT ============ -->
-    <section class="section" id="about" aria-labelledby="about-title">
-      <div class="container about__grid">
-        <div class="about__text reveal">
-          <p class="eyebrow">About</p>
-          <h2 class="section__title" id="about-title">A generalist who grows the business and keeps it running</h2>
-          <p>I hold a Bachelor of Management from Universitas Terbuka and bring hands-on experience in business development, sales, quality control, education and administration. I currently work as a Marketing Administrator at PT Citra Karsa Dinamika, managing marketing data, documents and team coordination.</p>
-          <p>I combine business development with operations because growth only lasts when the processes behind it are reliable. I am especially interested in data and AI: I build Claude Code agent workflows that automate bookkeeping, market research and content production.</p>
+    <!-- ============ ABOUT (kata terisi warna saat scroll) ============ -->
+    <section class="statement" id="about" aria-labelledby="about-title">
+      <div class="statement__pin">
+        <div class="statement__sticky">
+          <div class="container">
+            <h2 class="eyebrow" id="about-title">About</h2>
+            <p class="statement__text" data-words>I’m Naufal — a Bachelor of Management graduate who spent four years teaching, then worked across sales, quality control and business development. Today I run marketing administration at PT Citra Karsa Dinamika and build Claude Code agents that take over repetitive work. I grow the business, keep it running, and automate what slows it down.</p>
+          </div>
         </div>
-
-        <!-- Angka sorotan: ganti nilai & label sesuai kebutuhan. data-count="projects" dihitung otomatis dari projects.js -->
-        <ul class="stats" aria-label="Highlights">
-          <li class="reveal" style="--d:1">
-            <div class="stat" data-tilt>
-              <span class="stat__value" data-countup>5+</span>
-              <span class="stat__label">Years of work experience</span>
-            </div>
-          </li>
-          <li class="reveal" style="--d:2">
-            <div class="stat" data-tilt>
-              <span class="stat__value" data-countup data-count="projects">5</span>
-              <span class="stat__label">Portfolio projects</span>
-            </div>
-          </li>
-          <li class="reveal" style="--d:3">
-            <div class="stat" data-tilt>
-              <span class="stat__value" data-countup>5</span>
-              <span class="stat__label">Certifications &amp; trainings</span>
-            </div>
-          </li>
-        </ul>
+      </div>
+      <div class="container">
+          <!-- Angka sorotan: ganti sesuai kebutuhan. data-count="projects" dihitung otomatis dari projects.js -->
+          <ul class="stats reveal" aria-label="Highlights">
+            <li class="stat"><span class="stat__value" data-countup>5+</span><span class="stat__label">Years of work experience</span></li>
+            <li class="stat"><span class="stat__value" data-countup>5</span><span class="stat__label">Different roles</span></li>
+            <li class="stat"><span class="stat__value" data-countup data-count="projects">5</span><span class="stat__label">Portfolio projects</span></li>
+            <li class="stat"><span class="stat__value" data-countup>5</span><span class="stat__label">Certifications</span></li>
+          </ul>
       </div>
     </section>
 
-    <!-- ============ SKILLS ============ -->
-    <section class="section section--surface" id="skills" aria-labelledby="skills-title">
+    <!-- ============ JOURNEY (jalur karier) ============ -->
+    <section class="section journey" id="journey" aria-labelledby="journey-title">
       <div class="container">
-        <header class="section__head reveal" data-index="01">
-          <p class="eyebrow">Skills</p>
-          <h2 class="section__title" id="skills-title">What I bring to the team</h2>
+        <header class="section__head reveal">
+          <p class="eyebrow">Journey</p>
+          <h2 class="big-title" id="journey-title">From classroom<br>to business.</h2>
+          <p class="lead">Five roles, one direction. Every stop added a skill I still use today.</p>
         </header>
 
-        <div class="skills-grid">
-          <div class="reveal" style="--d:0">
-            <article class="card skill-card" data-tilt>
-              <span class="card__icon depth" aria-hidden="true">
-                <svg class="icon" viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg>
-              </span>
-              <h3 class="card__title depth-sm">Business Development</h3>
-              <ul class="check-list">
-                <li>Market research</li>
-                <li>Partner &amp; prospect mapping</li>
-                <li>Presentations &amp; proposals</li>
-                <li>Sales &amp; CRM</li>
-                <li>Negotiation &amp; public speaking</li>
-              </ul>
-            </article>
-          </div>
+        <div class="journey__map">
+          <svg class="journey__svg" aria-hidden="true" focusable="false">
+            <path class="journey__road"/>
+            <path class="journey__lane"/>
+            <path class="journey__progress"/>
+          </svg>
 
-          <div class="reveal" style="--d:1">
-            <article class="card skill-card" data-tilt>
-              <span class="card__icon depth" aria-hidden="true">
-                <svg class="icon" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>
-              </span>
-              <h3 class="card__title depth-sm">Operations &amp; Admin</h3>
-              <ul class="check-list">
-                <li>Data entry &amp; management</li>
-                <li>Document archiving &amp; delivery</li>
-                <li>Cross-team coordination</li>
-                <li>Reporting</li>
-                <li>Inventory administration &amp; QC</li>
-              </ul>
-            </article>
-          </div>
+          <!-- Tiap <li class="stop"> = satu perhentian. Isi [YOUR METRIC] dengan angka nyata. -->
+          <ol class="journey__stops">
+            <li class="stop">
+              <span class="stop__node" aria-hidden="true"><span>2021</span></span>
+              <article class="stop__card">
+                <p class="stop__date">Feb 2021 – Mar 2021</p>
+                <h3 class="stop__role">Sales Staff</h3>
+                <p class="stop__org">PT Nippon Indosari Corpindo</p>
+                <p class="stop__text">Met daily sales targets, kept retail products available and coordinated with customers and distribution.</p>
+                <p class="stop__carry"><span>Carried forward</span> Targets · Customers · Distribution</p>
+              </article>
+            </li>
 
-          <div class="reveal" style="--d:2">
-            <article class="card skill-card" data-tilt>
-              <span class="card__icon depth" aria-hidden="true">
-                <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4M8 9l2 2-2 2M13 13h3"/></svg>
-              </span>
-              <h3 class="card__title depth-sm">Tools &amp; Tech</h3>
-              <ul class="check-list">
-                <li>Excel / Google Sheets (PivotTables, VLOOKUP, INDEX-MATCH)</li>
-                <li>Canva</li>
-                <li>Claude &amp; Claude Code</li>
-                <li>AI workflow automation</li>
-                <li>Microsoft Office &amp; data visualization</li>
-              </ul>
-            </article>
-          </div>
+            <li class="stop">
+              <span class="stop__node" aria-hidden="true"><span>2021</span></span>
+              <article class="stop__card">
+                <p class="stop__date">Jul 2021 – Jun 2025</p>
+                <h3 class="stop__role">Teacher</h3>
+                <p class="stop__org">Yayasan Perguruan Islam Al-Azhar 5 Kemandoran · Madrasah Al Islamiyah 242 Jakarta</p>
+                <p class="stop__text">Planned lessons and learning programs, analyzed learning outcomes to improve teaching, and prepared administrative reports.</p>
+                <p class="stop__carry"><span>Carried forward</span> Explaining · Planning · Reporting</p>
+              </article>
+            </li>
+
+            <li class="stop stop--branch">
+              <span class="stop__node" aria-hidden="true"><span>2022</span></span>
+              <article class="stop__card">
+                <p class="stop__date">Aug 2022 – Aug 2026 · Parallel track</p>
+                <h3 class="stop__role">Bachelor of Management</h3>
+                <p class="stop__org">Faculty of Economics and Business, Universitas Terbuka</p>
+                <p class="stop__text">Studied while working. GPA 3.18 / 4.00. Medical Division Member, Mapala Universitas Terbuka.</p>
+                <p class="stop__carry"><span>Carried forward</span> Management · Accounting · Discipline</p>
+              </article>
+            </li>
+
+            <li class="stop">
+              <span class="stop__node" aria-hidden="true"><span>2025</span></span>
+              <article class="stop__card">
+                <p class="stop__date">Nov 2025 – Dec 2025</p>
+                <h3 class="stop__role">Quality Control</h3>
+                <p class="stop__org">PT Starion Wooin</p>
+                <p class="stop__text">Monitored production and final products against SOPs, recorded non-conformities and coordinated corrective action.</p>
+                <p class="stop__carry"><span>Carried forward</span> SOPs · Inspection · Follow-up</p>
+              </article>
+            </li>
+
+            <li class="stop">
+              <span class="stop__node" aria-hidden="true"><span>2026</span></span>
+              <article class="stop__card">
+                <p class="stop__date">Feb 2026 – May 2026</p>
+                <h3 class="stop__role">Business Development Officer</h3>
+                <p class="stop__org">Tempat Belajar · Remote apprenticeship</p>
+                <p class="stop__text">Researched market opportunities, built prospect lists and partnership strategies, and prepared persuasive presentations.</p>
+                <p class="stop__carry"><span>Carried forward</span> Research · Prospecting · Pitching</p>
+              </article>
+            </li>
+
+            <li class="stop stop--now">
+              <span class="stop__node" aria-hidden="true"><span>Now</span></span>
+              <article class="stop__card">
+                <p class="stop__date">Jul 2026 – Present</p>
+                <h3 class="stop__role">Marketing Administrator</h3>
+                <p class="stop__org">PT Citra Karsa Dinamika</p>
+                <ul class="stop__points">
+                  <li>Enter 200+ marketing data records every month and build data visualization dashboards.</li>
+                  <li>Archive and deliver [YOUR METRIC] marketing documents per month with a traceable filing system.</li>
+                  <li>Coordinate administrative support for the marketing team, cutting request turnaround to [YOUR METRIC].</li>
+                </ul>
+                <p class="stop__carry"><span>Carried forward</span> Data · Documents · Coordination</p>
+              </article>
+            </li>
+
+            <li class="stop stop--next">
+              <span class="stop__node" aria-hidden="true"><span>Next</span></span>
+              <article class="stop__card">
+                <p class="stop__date">The next stop</p>
+                <h3 class="stop__role">Business Development, on your team.</h3>
+                <p class="stop__text">Bringing all of the above to a Business Development or staff role where I can grow the business and keep it running.</p>
+                <a class="btn btn--primary" href="#contact">Let’s talk</a>
+              </article>
+            </li>
+          </ol>
         </div>
-
-        <!-- Cincin 3D berputar: tambah/hapus <li> untuk mengubah daftar tools -->
-        <div class="tool-ring reveal" aria-label="Tools I work with">
-          <ul class="tool-ring__track">
-            <li>Excel</li>
-            <li>Google Sheets</li>
-            <li>Canva</li>
-            <li>Claude</li>
-            <li>Claude Code</li>
-            <li>Microsoft Office</li>
-            <li>PivotTables</li>
-            <li>Data Visualization</li>
-            <li>AI Automation</li>
-            <li>CRM</li>
-          </ul>
-        </div>
-
-        <p class="skills-note reveal"><strong>Languages:</strong> Indonesian (native) · English (intermediate) · Arabic (intermediate)</p>
       </div>
     </section>
 
-    <!-- ============ PROJECTS ============ -->
-    <section class="section" id="projects" aria-labelledby="projects-title">
+    <!-- ============ LAB (proyek, kartu bertumpuk) ============ -->
+    <section class="section lab" id="projects" aria-labelledby="projects-title">
       <div class="container">
-        <header class="section__head reveal" data-index="02">
-          <p class="eyebrow">Projects</p>
-          <h2 class="section__title" id="projects-title">Selected work</h2>
-          <p class="section__lead">Each project starts with a real problem and ends with a working result. Select a card for the full story.</p>
+        <header class="section__head reveal">
+          <p class="eyebrow">The lab</p>
+          <h2 class="big-title" id="projects-title">AI, data &amp;<br>market work.</h2>
+          <p class="lead">Projects where I test how far AI and automation can take everyday business work. Select a card for the full story.</p>
         </header>
 
         <!-- Tombol filter dibuat otomatis dari kategori di projects.js -->
         <div class="filters reveal" role="group" aria-label="Filter projects by category"></div>
-
-        <ul class="project-grid" aria-live="polite"></ul>
-        <noscript><p class="section__lead">Please enable JavaScript to view the project gallery.</p></noscript>
+        <ul class="stack" aria-live="polite"></ul>
+        <noscript><p class="lead">Please enable JavaScript to view the projects.</p></noscript>
       </div>
     </section>
 
-    <!-- ============ EXPERIENCE ============ -->
-    <section class="section section--surface" id="experience" aria-labelledby="experience-title">
-      <div class="container container--narrow">
-        <header class="section__head reveal" data-index="03">
-          <p class="eyebrow">Experience</p>
-          <h2 class="section__title" id="experience-title">Work &amp; education</h2>
-        </header>
-
-        <ol class="timeline">
-          <li class="timeline__item reveal reveal--side">
-            <div class="timeline__head">
-              <h3 class="timeline__role">Marketing Administrator</h3>
-              <span class="timeline__date">Jul 2026 – Present</span>
-            </div>
-            <p class="timeline__org">PT Citra Karsa Dinamika</p>
-            <!-- Isi [YOUR METRIC] dengan angka nyata -->
-            <ul class="timeline__points">
-              <li>Enter 200+ marketing data records every month and build data visualization dashboards for the team.</li>
-              <li>Archive and deliver [YOUR METRIC] marketing documents per month with a traceable filing system.</li>
-              <li>Coordinate administrative support for the marketing team, cutting request turnaround to [YOUR METRIC].</li>
-            </ul>
-          </li>
-
-          <li class="timeline__item reveal reveal--side">
-            <div class="timeline__head">
-              <h3 class="timeline__role">Business Development Officer</h3>
-              <span class="timeline__date">Feb 2026 – May 2026</span>
-            </div>
-            <p class="timeline__org">Tempat Belajar · Remote apprenticeship</p>
-            <ul class="timeline__points">
-              <li>Conducted market research to identify opportunities, user needs and service development potential.</li>
-              <li>Built prospect lists and business development strategies to support partnerships and network growth.</li>
-              <li>Prepared persuasive presentation materials and worked with the team to resolve project issues.</li>
-            </ul>
-          </li>
-
-          <li class="timeline__item reveal reveal--side">
-            <div class="timeline__head">
-              <h3 class="timeline__role">Quality Control</h3>
-              <span class="timeline__date">Nov 2025 – Dec 2025</span>
-            </div>
-            <p class="timeline__org">PT Starion Wooin</p>
-            <ul class="timeline__points">
-              <li>Monitored production processes and final products against company standards and SOPs.</li>
-              <li>Recorded non-conformities, wrote inspection reports and coordinated corrective action with production.</li>
-            </ul>
-          </li>
-
-          <li class="timeline__item reveal reveal--side">
-            <div class="timeline__head">
-              <h3 class="timeline__role">Teacher</h3>
-              <span class="timeline__date">Jul 2021 – Jun 2025</span>
-            </div>
-            <p class="timeline__org">Yayasan Perguruan Islam Al-Azhar 5 Kemandoran · Madrasah Al Islamiyah 242 Jakarta</p>
-            <ul class="timeline__points">
-              <li>Planned lessons, materials and learning programs aligned with the curriculum and student needs.</li>
-              <li>Analyzed learning outcomes to improve teaching strategies and prepared administrative reports.</li>
-            </ul>
-          </li>
-
-          <li class="timeline__item reveal reveal--side">
-            <div class="timeline__head">
-              <h3 class="timeline__role">Sales Staff</h3>
-              <span class="timeline__date">Feb 2021 – Mar 2021</span>
-            </div>
-            <p class="timeline__org">PT Nippon Indosari Corpindo</p>
-            <ul class="timeline__points">
-              <li>Met daily sales targets, kept retail products available and coordinated with customers and distribution.</li>
-            </ul>
-          </li>
-
-          <li class="timeline__item timeline__item--edu reveal reveal--side">
-            <div class="timeline__head">
-              <h3 class="timeline__role">Bachelor of Management</h3>
-              <span class="timeline__date">Aug 2022 – Aug 2026</span>
-            </div>
-            <p class="timeline__org">Faculty of Economics and Business, Universitas Terbuka</p>
-            <ul class="timeline__points">
-              <li>GPA 3.18 / 4.00.</li>
-              <li>Medical Division Member, Mapala Universitas Terbuka — first-aid logistics, field response and incident reporting.</li>
-            </ul>
-          </li>
-        </ol>
-      </div>
-    </section>
-
-    <!-- ============ CERTIFICATIONS ============ -->
-    <section class="section" id="certifications" aria-labelledby="cert-title">
+    <!-- ============ SKILLS (tiga kata kerja) ============ -->
+    <section class="section skills" id="skills" aria-labelledby="skills-title">
       <div class="container">
-        <header class="section__head reveal" data-index="04">
-          <p class="eyebrow">Certifications</p>
-          <h2 class="section__title" id="cert-title">Certifications &amp; training</h2>
+        <header class="section__head reveal">
+          <p class="eyebrow">Skills</p>
+          <h2 class="big-title" id="skills-title">What I do,<br>in three verbs.</h2>
         </header>
 
-        <!-- Tambah sertifikat: salin satu <li class="reveal"> ... </li> -->
-        <ul class="cert-grid">
-          <li class="reveal" style="--d:0">
-            <div class="cert" data-tilt>
-              <span class="cert__icon depth" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="9" r="6"/><path d="M8.5 13.5L7 22l5-3 5 3-1.5-8.5"/></svg></span>
-              <div class="depth-sm">
-                <h3 class="cert__title">Excel Accounting — Grade A</h3>
-                <p class="cert__meta">DSAREA · Jun–Jul 2026</p>
-                <p class="cert__id">No. 0025/DSA/EC/072026</p>
-              </div>
-            </div>
+        <div class="verbs">
+          <article class="verb reveal" style="--d:0">
+            <p class="verb__num">01</p>
+            <h3 class="verb__word">Grow</h3>
+            <p class="verb__sub">Business Development</p>
+            <ul class="verb__list">
+              <li>Market research</li>
+              <li>Partner &amp; prospect mapping</li>
+              <li>Presentations &amp; proposals</li>
+              <li>Sales &amp; CRM</li>
+              <li>Negotiation &amp; public speaking</li>
+            </ul>
+          </article>
+          <article class="verb reveal" style="--d:1">
+            <p class="verb__num">02</p>
+            <h3 class="verb__word">Run</h3>
+            <p class="verb__sub">Operations &amp; Admin</p>
+            <ul class="verb__list">
+              <li>Data entry &amp; management</li>
+              <li>Document archiving &amp; delivery</li>
+              <li>Cross-team coordination</li>
+              <li>Reporting</li>
+              <li>Inventory administration &amp; QC</li>
+            </ul>
+          </article>
+          <article class="verb verb--accent reveal" style="--d:2">
+            <p class="verb__num">03</p>
+            <h3 class="verb__word">Automate</h3>
+            <p class="verb__sub">Tools &amp; Tech</p>
+            <ul class="verb__list">
+              <li>Excel / Google Sheets (PivotTables, VLOOKUP, INDEX-MATCH)</li>
+              <li>Claude &amp; Claude Code</li>
+              <li>AI workflow automation</li>
+              <li>Canva</li>
+              <li>Microsoft Office &amp; data visualization</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+
+      <!-- Teks berjalan: kecepatannya mengikuti scroll. Ubah daftar tools di sini. -->
+      <div class="marquee" aria-hidden="true">
+        <div class="marquee__row" data-speed="1">
+          <div class="marquee__track">
+            <span>Excel</span><i>✦</i><span>Google Sheets</span><i>✦</i><span>Claude Code</span><i>✦</i><span>Canva</span><i>✦</i><span>PivotTables</span><i>✦</i><span>CRM</span><i>✦</i>
+          </div>
+        </div>
+        <div class="marquee__row marquee__row--outline" data-speed="-1">
+          <div class="marquee__track">
+            <span>Market Research</span><i>✦</i><span>Data Visualization</span><i>✦</i><span>AI Automation</span><i>✦</i><span>Microsoft Office</span><i>✦</i>
+          </div>
+        </div>
+      </div>
+
+      <div class="container">
+        <h3 class="sub-title reveal">Certifications &amp; training</h3>
+        <!-- Tambah sertifikat: salin satu <li class="cert"> ... </li> -->
+        <ul class="certs">
+          <li class="cert reveal">
+            <span class="cert__title">Excel Accounting — Grade A</span>
+            <span class="cert__issuer">DSAREA</span>
+            <span class="cert__date">Jun–Jul 2026</span>
+            <span class="cert__id">No. 0025/DSA/EC/072026</span>
           </li>
-          <li class="reveal" style="--d:1">
-            <div class="cert" data-tilt>
-              <span class="cert__icon depth" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="9" r="6"/><path d="M8.5 13.5L7 22l5-3 5 3-1.5-8.5"/></svg></span>
-              <div class="depth-sm">
-                <h3 class="cert__title">Warehouse Administration &amp; Inventory Operations</h3>
-                <p class="cert__meta">Kelas.com · Jul 2026</p>
-                <p class="cert__id">ID CERT-E1207925</p>
-              </div>
-            </div>
+          <li class="cert reveal">
+            <span class="cert__title">Warehouse Administration &amp; Inventory Operations</span>
+            <span class="cert__issuer">Kelas.com</span>
+            <span class="cert__date">Jul 2026</span>
+            <span class="cert__id">ID CERT-E1207925</span>
           </li>
-          <li class="reveal" style="--d:2">
-            <div class="cert" data-tilt>
-              <span class="cert__icon depth" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="9" r="6"/><path d="M8.5 13.5L7 22l5-3 5 3-1.5-8.5"/></svg></span>
-              <div class="depth-sm">
-                <h3 class="cert__title">Business Development Bootcamp</h3>
-                <p class="cert__meta">Tempat Belajar · Feb–May 2026</p>
-                <p class="cert__id">8-week program</p>
-              </div>
-            </div>
+          <li class="cert reveal">
+            <span class="cert__title">Business Development Bootcamp</span>
+            <span class="cert__issuer">Tempat Belajar</span>
+            <span class="cert__date">Feb–May 2026</span>
+            <span class="cert__id">8-week program</span>
           </li>
-          <li class="reveal" style="--d:3">
-            <div class="cert" data-tilt>
-              <span class="cert__icon depth" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="9" r="6"/><path d="M8.5 13.5L7 22l5-3 5 3-1.5-8.5"/></svg></span>
-              <div class="depth-sm">
-                <h3 class="cert__title">Public Speaking Webinar</h3>
-                <p class="cert__meta">Kamilatih · Apr 2026</p>
-                <p class="cert__id">“Rahasia Jago Bicara” Batch 19</p>
-              </div>
-            </div>
+          <li class="cert reveal">
+            <span class="cert__title">Public Speaking Webinar</span>
+            <span class="cert__issuer">Kamilatih</span>
+            <span class="cert__date">Apr 2026</span>
+            <span class="cert__id">“Rahasia Jago Bicara” Batch 19</span>
           </li>
-          <li class="reveal" style="--d:4">
-            <div class="cert" data-tilt>
-              <span class="cert__icon depth" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="9" r="6"/><path d="M8.5 13.5L7 22l5-3 5 3-1.5-8.5"/></svg></span>
-              <div class="depth-sm">
-                <h3 class="cert__title">English Proficiency Program — Grade B</h3>
-                <p class="cert__meta">Golden English, Kampung Inggris Plus · Oct 2025</p>
-                <p class="cert__id">180 sessions</p>
-              </div>
-            </div>
+          <li class="cert reveal">
+            <span class="cert__title">English Proficiency Program — Grade B</span>
+            <span class="cert__issuer">Golden English, Kampung Inggris Plus</span>
+            <span class="cert__date">Oct 2025</span>
+            <span class="cert__id">180 sessions</span>
           </li>
         </ul>
+        <p class="languages reveal"><strong>Languages</strong> Indonesian (native) · English (intermediate) · Arabic (intermediate)</p>
       </div>
     </section>
 
     <!-- ============ CONTACT ============ -->
-    <section class="section section--surface section--contact" id="contact" aria-labelledby="contact-title">
-      <div class="container contact">
-        <div class="reveal">
-        <div class="contact__panel" data-tilt data-tilt-max="4">
-          <p class="eyebrow depth-sm">Contact</p>
-          <h2 class="section__title depth" id="contact-title">Let’s work together</h2>
-          <p class="section__lead depth-sm">Open to Business Development and staff roles. Let’s talk about how I can support your team.</p>
+    <section class="contact" id="contact" aria-labelledby="contact-title">
+      <div class="container">
+        <p class="eyebrow">Contact</p>
+        <h2 class="contact__title reveal" id="contact-title">Let’s grow<br>something.</h2>
+        <p class="lead reveal">Open to Business Development and staff roles.</p>
 
-          <ul class="contact__links depth-sm">
-            <li>
-              <a class="contact__link" href="mailto:naufal.kaffah12@gmail.com">
-                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
-                <span><span class="contact__label">Email</span>naufal.kaffah12@gmail.com</span>
-              </a>
-            </li>
-            <li>
-              <!-- Ganti href dengan URL LinkedIn Anda, mis. https://www.linkedin.com/in/nama-anda -->
-              <a class="contact__link" href="https://www.linkedin.com/in/[YOUR-LINKEDIN]" target="_blank" rel="noopener">
-                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10v7M8 7v.01M12 17v-4a2 2 0 0 1 4 0v4M12 10v7"/></svg>
-                <span><span class="contact__label">LinkedIn</span>[YOUR LINKEDIN]</span>
-              </a>
-            </li>
-            <li>
-              <a class="contact__link" href="https://wa.me/6282124843134" target="_blank" rel="noopener">
-                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l1.3-3.9A8 8 0 1 1 8 19z"/><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5l1.2-1.4-2-1-1 .8a4 4 0 0 1-2.1-2.1l.8-1-1-2z"/></svg>
-                <span><span class="contact__label">WhatsApp</span>+62 821 2484 3134</span>
-              </a>
-            </li>
-          </ul>
+        <ul class="contact__rows">
+          <li class="reveal" style="--d:0">
+            <a class="contact__row" href="mailto:naufal.kaffah12@gmail.com">
+              <span class="contact__label">Email</span>
+              <span class="contact__value">naufal.kaffah12@gmail.com</span>
+              <svg class="icon contact__arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg>
+            </a>
+          </li>
+          <li class="reveal" style="--d:1">
+            <!-- Ganti href dengan URL LinkedIn Anda, mis. https://www.linkedin.com/in/nama-anda -->
+            <a class="contact__row" href="https://www.linkedin.com/in/[YOUR-LINKEDIN]" target="_blank" rel="noopener">
+              <span class="contact__label">LinkedIn</span>
+              <span class="contact__value">[YOUR LINKEDIN]</span>
+              <svg class="icon contact__arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg>
+            </a>
+          </li>
+          <li class="reveal" style="--d:2">
+            <a class="contact__row" href="https://wa.me/6282124843134" target="_blank" rel="noopener">
+              <span class="contact__label">WhatsApp</span>
+              <span class="contact__value">+62 821 2484 3134</span>
+              <svg class="icon contact__arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg>
+            </a>
+          </li>
+        </ul>
 
-          <a class="btn btn--primary btn--lg depth" href="assets/cv.pdf" download="Naufal_Kaffah_CV.pdf">
-            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>
-            Download CV
-          </a>
-        </div>
-        </div>
+        <a class="btn btn--light btn--lg reveal" href="assets/cv.pdf" download="Naufal_Kaffah_CV.pdf">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>
+          Download CV
+        </a>
       </div>
     </section>
   </main>
@@ -457,6 +408,7 @@
   <footer class="site-footer">
     <div class="container site-footer__inner">
       <p>© <span data-year>2026</span> Naufal Kaffah</p>
+      <p class="site-footer__motto">Grow it. Run it. Automate it.</p>
       <p>Built with Claude Code</p>
     </div>
   </footer>
@@ -473,6 +425,5 @@
 
   <script src="js/projects.js"></script>
   <script src="js/main.js"></script>
-  <script src="js/scene3d.js"></script>
 </body>
 </html>

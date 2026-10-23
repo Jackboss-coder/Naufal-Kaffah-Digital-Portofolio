@@ -1,15 +1,14 @@
 # Portofolio Naufal Kaffah
 
-Website portofolio satu halaman bergaya 3D dengan animasi (HTML, CSS, JavaScript murni — tanpa framework, tanpa library, tanpa build step).
+Website portofolio satu halaman dengan animasi scroll storytelling (HTML, CSS, JavaScript murni — tanpa framework, tanpa library, tanpa build step).
 Bisa dibuka langsung dengan klik dua kali `index.html`, dan siap di-hosting gratis di Cloudflare Pages.
 
 ## Struktur folder
 
 ```
-/index.html            ← seluruh isi halaman (teks About, Skills, Experience, Certifications, Contact)
+/index.html            ← seluruh isi halaman (Hero, About, Journey, Skills, Certifications, Contact)
 /css/style.css         ← tampilan; warna ada di bagian paling atas (:root)
-/js/main.js            ← fitur interaktif (mode gelap, menu HP, filter, modal, efek tilt 3D, animasi scroll)
-/js/scene3d.js         ← globe jaringan 3D di bagian atas (hero)
+/js/main.js            ← fitur interaktif (mode gelap, menu HP, filter, modal, animasi scroll, jalur karier)
 /js/projects.js        ← DATA PROYEK — file yang diedit untuk menambah karya
 /assets/img/           ← foto profil, favicon, gambar Open Graph
 /assets/img/projects/  ← gambar proyek
@@ -27,25 +26,25 @@ Cari teks berikut (Ctrl+F) lalu ganti dengan data asli:
 | `[YOUR METRIC]` (3×) | `js/projects.js`, kolom `result` |
 | `naufal-kaffah.pages.dev` (3×) | `index.html`, bagian `<head>` — ganti jika alamat situs Anda berbeda |
 
-Angka sorotan di bagian About (`5+`, `5`, `5`) diambil dari CV. Angka "Portfolio projects" dihitung otomatis dari jumlah proyek di `projects.js`.
+Angka sorotan di bagian About (`5+` tahun, `5` peran, `5` sertifikat) diambil dari CV. Angka "Portfolio projects" dihitung otomatis dari jumlah proyek di `projects.js`.
 
 ## Mengganti foto profil
 
-Foto saat ini: `assets/img/profile.png` — latar sudah dihapus (transparan), ukuran 480×558 px.
-Di situs, bagian bawah foto mengikuti lengkung bola 3D dan kepala sedikit menyembul di atasnya.
+Foto saat ini: `assets/img/profile.png` — latar sudah dihapus (transparan), ukuran 520×792 px.
+Di situs, panel biru lebih pendek dari foto, sehingga kepala keluar dari atas panel.
 
 Untuk mengganti foto:
-1. Siapkan foto setengah badan dengan **latar transparan** (PNG), rasio 480×558 (lebar × tinggi).
-   Posisikan rambut ±12% dari atas gambar dan mata ±35% dari atas, supaya kepala menyembul pas di atas bola.
+1. Siapkan foto setengah badan dengan **latar transparan** (PNG), rasio 520×792 (lebar × tinggi).
+   Rambut sebaiknya ±3% dari atas gambar, dan badan sampai ke tepi bawah.
    Penghapus latar gratis: fitur "Remove background" di Canva atau remove.bg.
 2. Simpan dengan nama `profile.png` di `assets/img/` (timpa file lama).
-3. Jika file dihapus, situs otomatis menampilkan bola monogram "NK".
+3. Jika file dihapus, panel biru otomatis menampilkan monogram "NK".
 
 ## Mengganti CV
 
 Ganti file `assets/cv.pdf` dengan CV terbaru Anda. Nama file **harus tetap** `cv.pdf`.
 (Saat ini berisi CV hasil konversi dari `Naufal_Kaffah_CV.docx`.)
-Nama file saat diunduh pengunjung adalah `Naufal_Kaffah_CV.pdf`; untuk mengubahnya, edit atribut `download="..."` di `index.html` (ada 3 tombol).
+Nama file saat diunduh pengunjung adalah `Naufal_Kaffah_CV.pdf`; untuk mengubahnya, edit atribut `download="..."` di `index.html` (ada 4 tombol).
 
 ## Menambah proyek baru
 
@@ -81,14 +80,19 @@ Tips:
 
 Di `index.html`, bagian `CERTIFICATIONS`, salin satu blok `<li class="cert reveal"> ... </li>` lalu ganti judul, penerbit, tanggal, dan nomor sertifikat.
 
-## Efek 3D & animasi
+## Konsep & animasi scroll
 
-- **Globe 3D di hero** (`js/scene3d.js`): jaringan titik yang berputar mengelilingi foto, bisa diputar dengan cara di-drag, dan ikut miring mengikuti kursor.
-  Label yang mengorbit (Data, AI & Automation, Business Dev, Operations) diatur di `index.html`, pada elemen `<span class="orbit__chip">`.
-- **Kartu 3D** (tilt + kilau cahaya mengikuti kursor): elemen apa pun yang diberi atribut `data-tilt` akan ikut miring.
-  Tambahkan `data-tilt-max="4"` untuk memperkecil kemiringan. Efek ini hanya aktif di perangkat dengan mouse/trackpad.
-- **Cincin tools berputar** di bagian Skills: tambah atau hapus `<li>` di dalam `<ul class="tool-ring__track">`.
-- **Animasi masuk saat scroll**: elemen dengan class `reveal` muncul dengan efek 3D. `style="--d:1"` memberi jeda bertahap.
+Konsep: **"Grow it. Run it. Automate it."** — latar terang, navy sebagai aksen, tipografi raksasa, dan halaman yang bercerita saat di-scroll.
+
+- **Hero**: motto muncul per baris; foto setengah layar dengan kepala keluar dari panel biru. Saat di-scroll, foto dan panel bergeser (parallax).
+  Label melayang di sekitar foto diatur di `index.html`, pada elemen `<span class="portrait__tag">`.
+- **About**: kalimat besar yang kata-katanya "terisi warna" saat di-scroll. Ubah teksnya langsung di elemen `<p class="statement__text">`.
+- **Journey**: jalur karier yang tergambar saat di-scroll; tiap pekerjaan adalah satu `<li class="stop">` di `index.html`.
+  Jalur dibuat otomatis mengikuti jumlah perhentian, jadi Anda cukup menambah, menghapus, atau mengubah urutan `<li class="stop">`.
+  Class tambahan: `stop--branch` (jalur paralel, mis. kuliah), `stop--now` (pekerjaan sekarang), `stop--next` (ajakan di akhir).
+- **Lab**: kartu proyek bertumpuk dari `js/projects.js`; kartu sebelumnya mengecil saat kartu berikutnya menutupinya.
+- **Skills**: tiga kata kerja (Grow / Run / Automate) dan teks berjalan yang makin cepat saat di-scroll. Daftar tools teks berjalan ada di `<div class="marquee">`.
+- **Animasi masuk saat scroll**: elemen dengan class `reveal`. `style="--d:1"` memberi jeda bertahap.
 - Semua animasi otomatis dimatikan bagi pengunjung yang mengaktifkan pengaturan "kurangi gerakan" (reduce motion) di perangkatnya.
 - Gambar proyek bawaan berupa ilustrasi isometrik (SVG) di `assets/img/projects/`. Ganti dengan screenshot asli jika sudah ada.
 

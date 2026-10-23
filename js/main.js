@@ -2,8 +2,8 @@
   "use strict";
 
   var root = document.documentElement;
-  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-  var finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
+  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
   var projects = Array.isArray(window.PROJECTS) ? window.PROJECTS : [];
 
   /* ---------- Helpers ---------- */
@@ -14,9 +14,7 @@
     return node;
   }
 
-  function storageGet(key) {
-    try { return localStorage.getItem(key); } catch (e) { return null; }
-  }
+  function clamp(v, min, max) { return v < min ? min : v > max ? max : v; }
 
   function storageSet(key, value) {
     try { localStorage.setItem(key, value); } catch (e) { /* storage unavailable */ }
@@ -46,14 +44,12 @@
     return img;
   }
 
-  /* ---------- Theme toggle ---------- */
+  /* ---------- Theme toggle (light by default) ---------- */
   var themeBtn = document.querySelector(".theme-toggle");
 
   function applyTheme(theme) {
     root.setAttribute("data-theme", theme);
-    if (themeBtn) {
-      themeBtn.setAttribute("aria-label", theme === "dark" ? "Switch to light mode" : "Switch to dark mode");
-    }
+    if (themeBtn) themeBtn.setAttribute("aria-label", theme === "dark" ? "Switch to light mode" : "Switch to dark mode");
   }
 
   applyTheme(root.getAttribute("data-theme") || "light");
@@ -65,15 +61,6 @@
       storageSet("theme", next);
     });
   }
-
-  // Follow system changes until the visitor picks a theme
-  var systemDark = window.matchMedia("(prefers-color-scheme: dark)");
-  var onSystemChange = function (e) {
-    var saved = storageGet("theme");
-    if (saved !== "light" && saved !== "dark") applyTheme(e.matches ? "dark" : "light");
-  };
-  if (systemDark.addEventListener) systemDark.addEventListener("change", onSystemChange);
-  else if (systemDark.addListener) systemDark.addListener(onSystemChange);
 
   /* ---------- Mobile menu ---------- */
   var navToggle = document.querySelector(".nav__toggle");
@@ -106,77 +93,38 @@
     });
   }
 
-  /* ---------- Hero name: split into letters for the 3D entrance ---------- */
-  document.querySelectorAll("[data-split]").forEach(function (node) {
-    var text = node.textContent.trim();
-    node.setAttribute("aria-label", text);
-    node.textContent = "";
-    var i = 0;
-    text.split(" ").forEach(function (word, w) {
-      if (w > 0) node.appendChild(document.createTextNode(" "));
-      var wordEl = el("span", "word");
-      wordEl.setAttribute("aria-hidden", "true");
-      word.split("").forEach(function (ch) {
-        var c = el("span", "char", ch);
-        c.style.setProperty("--i", i++);
-        wordEl.appendChild(c);
-      });
-      node.appendChild(wordEl);
-    });
-  });
-
-  /* ---------- Tool ring: spread items evenly around the circle ---------- */
-  document.querySelectorAll(".tool-ring__track").forEach(function (track) {
-    var items = track.children;
-    track.style.setProperty("--n", items.length);
-    Array.prototype.forEach.call(items, function (li, i) { li.style.setProperty("--i", i); });
-  });
-
-  /* ---------- 3D tilt ---------- */
-  function bindTilt(node) {
-    if (!finePointer.matches || reduceMotion.matches || node._tilt) return;
-    node._tilt = true;
-    var max = Number(node.dataset.tiltMax) || 9;
-
-    node.addEventListener("pointermove", function (e) {
-      var r = node.getBoundingClientRect();
-      var px = (e.clientX - r.left) / r.width;
-      var py = (e.clientY - r.top) / r.height;
-      node.classList.add("is-tilting");
-      node.style.setProperty("--rx", ((0.5 - py) * max).toFixed(2) + "deg");
-      node.style.setProperty("--ry", ((px - 0.5) * max).toFixed(2) + "deg");
-      node.style.setProperty("--mx", (px * 100).toFixed(1) + "%");
-      node.style.setProperty("--my", (py * 100).toFixed(1) + "%");
-    });
-    node.addEventListener("pointerleave", function () {
-      node.classList.remove("is-tilting");
-      node.style.setProperty("--rx", "0deg");
-      node.style.setProperty("--ry", "0deg");
+  /* ---------- About statement: wrap words so they can fill in ---------- */
+  var statement = document.querySelector("[data-words]");
+  var statementWords = [];
+  if (statement) {
+    var words = statement.textContent.trim().split(/\s+/);
+    statement.textContent = "";
+    words.forEach(function (w, i) {
+      var span = el("span", "w", w);
+      statement.appendChild(span);
+      if (i < words.length - 1) statement.appendChild(document.createTextNode(" "));
+      statementWords.push(span);
     });
   }
 
-  document.querySelectorAll("[data-tilt]").forEach(bindTilt);
-
   /* ---------- Count-up numbers ---------- */
   function countUp(node) {
-    var raw = node.textContent.trim();
-    var match = raw.match(/^(\d+)(.*)$/);
-    if (!match || reduceMotion.matches) return;
+    var match = node.textContent.trim().match(/^(\d+)(.*)$/);
+    if (!match || reduceMotion) return;
     var target = Number(match[1]), suffix = match[2];
-    var start = null, duration = 1400;
+    var start = null;
     node.textContent = "0" + suffix;
     function frame(now) {
       if (start === null) start = now;
-      var t = Math.min((now - start) / duration, 1);
-      var eased = 1 - Math.pow(1 - t, 3);
-      node.textContent = Math.round(target * eased) + suffix;
+      var t = Math.min((now - start) / 1400, 1);
+      node.textContent = Math.round(target * (1 - Math.pow(1 - t, 3))) + suffix;
       if (t < 1) requestAnimationFrame(frame);
     }
     requestAnimationFrame(frame);
   }
 
   /* ---------- Reveal on scroll ---------- */
-  var revealObserver = "IntersectionObserver" in window && !reduceMotion.matches
+  var revealObserver = "IntersectionObserver" in window && !reduceMotion
     ? new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
           if (!entry.isIntersecting) return;
@@ -184,7 +132,7 @@
           entry.target.querySelectorAll("[data-countup]").forEach(countUp);
           revealObserver.unobserve(entry.target);
         });
-      }, { rootMargin: "0px 0px -8% 0px", threshold: 0.08 })
+      }, { rootMargin: "0px 0px -10% 0px", threshold: 0.1 })
     : null;
 
   function observeReveal(nodes) {
@@ -194,54 +142,64 @@
     });
   }
 
-  /* ---------- Projects gallery ---------- */
-  var grid = document.querySelector(".project-grid");
+  /* ---------- Lab: stacking project cards ---------- */
+  var stack = document.querySelector(".stack");
   var filtersWrap = document.querySelector(".filters");
   var CATEGORY_ORDER = ["AI & Automation", "Data & Analysis", "Content Design"];
+  var stackItems = [];
+
+  function pad(n) { return n < 10 ? "0" + n : String(n); }
 
   function renderCard(project, index) {
-    var li = el("li", "reveal");
+    var li = el("li", "stack__item");
     li.dataset.category = project.category;
-    li.style.setProperty("--d", index % 3);
 
-    var card = el("article", "project-card");
-    card.setAttribute("data-tilt", "");
+    var card = el("article", "stack-card");
 
-    var media = el("div", "project-card__media");
+    var media = el("div", "stack-card__media");
     media.appendChild(imageWithFallback(project.image, project.imageAlt));
     card.appendChild(media);
 
-    var body = el("div", "project-card__body");
-    body.appendChild(el("p", "project-card__cat", project.category));
+    var body = el("div", "stack-card__body");
+    body.appendChild(el("p", "stack-card__index", pad(index + 1) + " / " + pad(projects.length)));
+    body.appendChild(el("p", "stack-card__cat", project.category));
 
-    var h3 = el("h3", "project-card__title");
-    var open = el("button", "project-card__open", project.title);
+    var h3 = el("h3", "stack-card__title");
+    var open = el("button", "stack-card__open", project.title);
     open.type = "button";
     open.setAttribute("aria-haspopup", "dialog");
     open.addEventListener("click", function () { openModal(index, open); });
     h3.appendChild(open);
     body.appendChild(h3);
 
-    body.appendChild(el("p", "project-card__summary", project.summary));
+    body.appendChild(el("p", "stack-card__summary", project.summary));
 
     var tags = el("ul", "tags");
     tags.setAttribute("aria-label", "Tools");
     (project.tools || []).forEach(function (t) { tags.appendChild(el("li", "tag", t)); });
     body.appendChild(tags);
 
-    var more = el("span", "project-card__more");
+    var more = el("span", "stack-card__more");
     more.setAttribute("aria-hidden", "true");
-    more.innerHTML = "View details " + ARROW_ICON;
+    more.innerHTML = "Read the story " + ARROW_ICON;
     body.appendChild(more);
 
     // The whole card opens the modal; the title button keeps it keyboard-accessible
     card.addEventListener("click", function (e) {
-      if (!e.target.closest(".project-card__open")) openModal(index, open);
+      if (!e.target.closest(".stack-card__open")) openModal(index, open);
     });
 
     card.appendChild(body);
     li.appendChild(card);
     return li;
+  }
+
+  // Sticky offsets follow the visible order so the stack stays tidy after filtering
+  function indexStack() {
+    var i = 0;
+    stackItems.forEach(function (li) {
+      if (!li.hidden) li.style.setProperty("--i", i++);
+    });
   }
 
   function renderFilters() {
@@ -271,42 +229,23 @@
     filtersWrap.querySelectorAll(".filter-btn").forEach(function (b) {
       b.setAttribute("aria-pressed", String(b.dataset.filter === cat));
     });
-
-    var items = Array.prototype.slice.call(grid.children);
-    var match = function (li) { return cat === "All" || li.dataset.category === cat; };
-    var delay = reduceMotion.matches ? 0 : 260;
-
     clearTimeout(filterTimer);
-    items.forEach(function (li) {
-      li.style.setProperty("--d", 0);
-      li.classList.add("is-visible");
-      if (!li.hidden && !match(li)) li.classList.add("is-hiding");
-    });
-
+    stack.classList.add("is-filtering");
     filterTimer = setTimeout(function () {
-      items.forEach(function (li) {
-        if (match(li)) {
-          var wasHidden = li.hidden;
-          li.hidden = false;
-          if (wasHidden) {
-            li.classList.add("is-hiding");
-            void li.offsetWidth; // restart transition
-          }
-          li.classList.remove("is-hiding");
-        } else {
-          li.hidden = true;
-          li.classList.remove("is-hiding");
-        }
-      });
-    }, delay);
+      stackItems.forEach(function (li) { li.hidden = !(cat === "All" || li.dataset.category === cat); });
+      indexStack();
+      stack.classList.remove("is-filtering");
+      update();
+    }, reduceMotion ? 0 : 300);
   }
 
-  if (grid && filtersWrap) {
+  if (stack && filtersWrap) {
     projects.forEach(function (p, i) {
       var li = renderCard(p, i);
-      grid.appendChild(li);
-      bindTilt(li.firstChild);
+      stack.appendChild(li);
+      stackItems.push(li);
     });
+    indexStack();
     renderFilters();
   }
 
@@ -316,33 +255,153 @@
 
   observeReveal(Array.prototype.slice.call(document.querySelectorAll(".reveal")));
 
-  /* ---------- Scroll-driven motion: progress bar, active link, timeline ---------- */
+  /* ---------- Journey: road through the stations ---------- */
+  var map = document.querySelector(".journey__map");
+  var svg = map ? map.querySelector(".journey__svg") : null;
+  var road = svg ? svg.querySelector(".journey__road") : null;
+  var lane = svg ? svg.querySelector(".journey__lane") : null;
+  var progressPath = svg ? svg.querySelector(".journey__progress") : null;
+  var stops = map ? Array.prototype.slice.call(map.querySelectorAll(".stop")) : [];
+  var journey = { points: [], lengths: [], total: 0 };
+
+  function buildRoad() {
+    if (!map || !stops.length) return;
+    var base = map.getBoundingClientRect();
+    svg.setAttribute("viewBox", "0 0 " + base.width + " " + base.height);
+
+    var pts = stops.map(function (s) {
+      var r = s.querySelector(".stop__node").getBoundingClientRect();
+      return { x: r.left + r.width / 2 - base.left, y: r.top + r.height / 2 - base.top };
+    });
+    // Start a little above the first stop and run past the last one
+    var start = { x: pts[0].x, y: Math.max(0, pts[0].y - 120) };
+    var end = { x: pts[pts.length - 1].x, y: pts[pts.length - 1].y + 80 };
+    var all = [start].concat(pts, [end]);
+
+    var d = "M" + all[0].x + "," + all[0].y;
+    var lengths = [0];
+    var measure = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    for (var i = 1; i < all.length; i++) {
+      var a = all[i - 1], b = all[i], my = (a.y + b.y) / 2;
+      var seg = " C" + a.x + "," + my + " " + b.x + "," + my + " " + b.x + "," + b.y;
+      d += seg;
+      measure.setAttribute("d", d);
+      lengths.push(measure.getTotalLength());
+    }
+
+    road.setAttribute("d", d);
+    lane.setAttribute("d", d);
+    progressPath.setAttribute("d", d);
+    journey.points = all;
+    journey.lengths = lengths;
+    journey.total = lengths[lengths.length - 1];
+    progressPath.style.strokeDasharray = journey.total + " " + journey.total;
+  }
+
+  function updateJourney(vh) {
+    if (!journey.total) return;
+    var base = map.getBoundingClientRect();
+    var line = vh * 0.62 - base.top; // the "reading line" in map coordinates
+    var pts = journey.points, lens = journey.lengths;
+    var len;
+    if (reduceMotion) {
+      len = journey.total;
+    } else if (line <= pts[0].y) {
+      len = 0;
+    } else if (line >= pts[pts.length - 1].y) {
+      len = journey.total;
+    } else {
+      for (var i = 1; i < pts.length; i++) {
+        if (line <= pts[i].y) {
+          var f = (line - pts[i - 1].y) / (pts[i].y - pts[i - 1].y);
+          len = lens[i - 1] + f * (lens[i] - lens[i - 1]);
+          break;
+        }
+      }
+    }
+    progressPath.style.strokeDashoffset = String(journey.total - len);
+    stops.forEach(function (s, idx) {
+      if (reduceMotion || pts[idx + 1].y <= line) s.classList.add("is-reached");
+      else s.classList.remove("is-reached");
+    });
+  }
+
+  /* ---------- Marquee: speed follows scroll velocity ---------- */
+  var marqueeRows = Array.prototype.slice.call(document.querySelectorAll(".marquee__row")).map(function (row) {
+    var track = row.querySelector(".marquee__track");
+    // Repeat the track until the row is at least twice the viewport width, so it can loop seamlessly
+    var copies = 1;
+    while (row.scrollWidth < window.innerWidth * 2 + track.offsetWidth && copies < 12) {
+      var clone = track.cloneNode(true);
+      row.appendChild(clone);
+      copies++;
+    }
+    return { row: row, track: track, dir: Number(row.dataset.speed) || 1, x: 0 };
+  });
+  var marqueeVisible = false;
+  var scrollVelocity = 0;
+  var lastScrollY = window.scrollY;
+
+  function marqueeFrame() {
+    if (!marqueeVisible || reduceMotion) return;
+    var boost = 1 + Math.min(Math.abs(scrollVelocity) * 0.08, 6);
+    marqueeRows.forEach(function (m) {
+      var w = m.track.offsetWidth;
+      m.x -= 0.6 * boost * m.dir;
+      if (m.x <= -w) m.x += w;
+      if (m.x > 0) m.x -= w;
+      m.row.style.transform = "translate3d(" + m.x.toFixed(1) + "px,0,0)";
+    });
+    scrollVelocity *= 0.9;
+    requestAnimationFrame(marqueeFrame);
+  }
+
+  var marquee = document.querySelector(".marquee");
+  if (marquee && "IntersectionObserver" in window) {
+    new IntersectionObserver(function (entries) {
+      var was = marqueeVisible;
+      marqueeVisible = entries[0].isIntersecting;
+      if (marqueeVisible && !was) requestAnimationFrame(marqueeFrame);
+    }).observe(marquee);
+  }
+
+  /* ---------- Hero: pointer parallax on the floating tags ---------- */
+  var hero = document.querySelector(".hero");
+  var tags = Array.prototype.slice.call(document.querySelectorAll(".portrait__tag"));
+  if (hero && finePointer && !reduceMotion) {
+    hero.addEventListener("pointermove", function (e) {
+      var nx = e.clientX / window.innerWidth - 0.5;
+      var ny = e.clientY / window.innerHeight - 0.5;
+      tags.forEach(function (t) {
+        var depth = Number(t.dataset.depth) || 10;
+        t.style.setProperty("--tx", (nx * depth).toFixed(1) + "px");
+        t.style.setProperty("--ty", (ny * depth).toFixed(1) + "px");
+      });
+    });
+  }
+
+  /* ---------- Scroll-driven updates ---------- */
   var progressBar = document.querySelector(".scroll-progress");
   var navLinks = Array.prototype.slice.call(document.querySelectorAll('.nav__links a[href^="#"]'));
   var navSections = navLinks
     .map(function (a) { return document.getElementById(a.getAttribute("href").slice(1)); })
     .filter(Boolean);
+  var statementPin = document.querySelector(".statement__pin");
 
-  var timeline = document.querySelector(".timeline");
-  var timelineItems = timeline ? Array.prototype.slice.call(timeline.querySelectorAll(".timeline__item")) : [];
-  var timelineBar = null;
-  if (timeline) {
-    timelineBar = el("span", "timeline__progress");
-    timelineBar.setAttribute("aria-hidden", "true");
-    timeline.insertBefore(timelineBar, timeline.firstChild);
-  }
-
-  function onScroll() {
-    var doc = document.documentElement;
+  function update() {
     var vh = window.innerHeight;
-    var max = doc.scrollHeight - vh;
+    var y = window.scrollY;
+    var max = document.documentElement.scrollHeight - vh;
 
-    if (progressBar) progressBar.style.setProperty("--progress", max > 0 ? (window.scrollY / max).toFixed(4) : 0);
+    scrollVelocity = y - lastScrollY;
+    lastScrollY = y;
 
-    // Active nav link; the last section may never reach the line, so pick it once the page bottoms out
+    if (progressBar) progressBar.style.setProperty("--progress", max > 0 ? (y / max).toFixed(4) : 0);
+
+    // Active nav link
     var current = null;
     navSections.forEach(function (s) { if (s.getBoundingClientRect().top <= vh * 0.35) current = s; });
-    if (window.scrollY >= max - 2) current = navSections[navSections.length - 1];
+    if (y >= max - 2) current = navSections[navSections.length - 1];
     navLinks.forEach(function (a) {
       var active = current && a.getAttribute("href") === "#" + current.id;
       a.classList.toggle("is-active", !!active);
@@ -350,26 +409,56 @@
       else a.removeAttribute("aria-current");
     });
 
-    // Timeline line fills up to the reading line; passed items light up
-    if (timeline) {
-      var line = vh * 0.6;
-      var r = timeline.getBoundingClientRect();
-      var p = Math.max(0, Math.min(1, (line - r.top) / r.height));
-      timelineBar.style.setProperty("--p", p.toFixed(4));
-      timelineItems.forEach(function (item) {
-        item.classList.toggle("is-passed", item.getBoundingClientRect().top + 28 <= line);
+    if (reduceMotion) { updateJourney(vh); return; }
+
+    // Hero parallax: 0 at the top, 1 once the hero has scrolled away
+    if (hero) hero.style.setProperty("--hp", clamp(y / (hero.offsetHeight || vh), 0, 1).toFixed(3));
+
+    // Statement words fill in while the block is pinned
+    if (statementPin && statementWords.length) {
+      var r = statementPin.getBoundingClientRect();
+      var p = clamp((-r.top + vh * 0.25) / (r.height - vh * 0.6), 0, 1);
+      var n = statementWords.length;
+      statementWords.forEach(function (w, i) {
+        var o = clamp(p * (n + 6) - i, 0, 1);
+        w.style.setProperty("--o", (0.14 + o * 0.86).toFixed(2));
       });
     }
+
+    updateJourney(vh);
+
+    // Stacking cards: each card shrinks and dims as the next one slides over it
+    var visible = stackItems.filter(function (li) { return !li.hidden; });
+    visible.forEach(function (li, i) {
+      var card = li.firstChild;
+      var next = visible[i + 1];
+      var s = 1, b = 1;
+      if (next) {
+        var top = li.getBoundingClientRect().top;
+        var nextTop = next.getBoundingClientRect().top;
+        var h = li.offsetHeight || 1;
+        var overlap = clamp(1 - (nextTop - top) / h, 0, 1);
+        s = 1 - overlap * 0.07;
+        b = 1 - overlap * 0.12;
+      }
+      card.style.setProperty("--s", s.toFixed(4));
+      card.style.setProperty("--b", b.toFixed(3));
+    });
   }
 
   var ticking = false;
-  window.addEventListener("scroll", function () {
+  function requestUpdate() {
     if (ticking) return;
     ticking = true;
-    requestAnimationFrame(function () { onScroll(); ticking = false; });
-  }, { passive: true });
-  window.addEventListener("resize", onScroll);
-  onScroll();
+    requestAnimationFrame(function () { update(); ticking = false; });
+  }
+
+  window.addEventListener("scroll", requestUpdate, { passive: true });
+  window.addEventListener("resize", function () { buildRoad(); requestUpdate(); });
+  if ("ResizeObserver" in window && map) new ResizeObserver(function () { buildRoad(); requestUpdate(); }).observe(map);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { buildRoad(); update(); });
+  buildRoad();
+  update();
 
   /* ---------- Project modal ---------- */
   var modal = document.getElementById("project-modal");
@@ -394,7 +483,7 @@
     modalContent.appendChild(media);
 
     var body = el("div", "modal__body");
-    body.appendChild(el("p", "project-card__cat", p.category));
+    body.appendChild(el("p", "modal__cat", p.category));
     var title = el("h2", "modal__title", p.title);
     title.id = "modal-title";
     body.appendChild(title);
@@ -402,7 +491,7 @@
     if (p.problem) body.appendChild(section("The challenge", el("p", null, p.problem)));
 
     if (p.approach && p.approach.length) {
-      var list = el("ul", "check-list");
+      var list = el("ol", "modal__steps");
       p.approach.forEach(function (step) { list.appendChild(el("li", null, step)); });
       body.appendChild(section("What I did", list));
     }
@@ -410,9 +499,9 @@
     if (p.result) body.appendChild(section("The result", el("p", null, p.result)));
 
     if (p.tools && p.tools.length) {
-      var tags = el("ul", "tags");
-      p.tools.forEach(function (t) { tags.appendChild(el("li", "tag", t)); });
-      body.appendChild(section("Tools", tags));
+      var tagList = el("ul", "tags");
+      p.tools.forEach(function (t) { tagList.appendChild(el("li", "tag", t)); });
+      body.appendChild(section("Tools", tagList));
     }
 
     if (p.links && p.links.length) {
