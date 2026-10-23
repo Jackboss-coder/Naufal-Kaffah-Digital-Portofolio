@@ -21,9 +21,10 @@ Cari teks berikut (Ctrl+F) lalu ganti dengan data asli:
 
 | Placeholder | Lokasi |
 |---|---|
-| `[YOUR METRIC]` (2×) | `index.html`, poin Marketing Administrator |
 | `[YOUR METRIC]` (3×) | `js/projects.js`, kolom `result` |
-| `naufal-kaffah.pages.dev` (3×) | `index.html`, bagian `<head>` — ganti jika alamat situs Anda berbeda |
+
+Alamat situs: <https://naufal-kaffah-digital-portofolio.nk02.workers.dev> (Cloudflare Workers, deploy otomatis dari branch `main`).
+Alamat ini dipakai di 4 tag `<head>` `index.html` (canonical, og:url, og:image, twitter:image); ganti di sana jika alamatnya berubah.
 
 Angka sorotan di bagian About (`5+` tahun, `5` peran, `5` sertifikat) diambil dari CV. Angka "Portfolio projects" dihitung otomatis dari jumlah proyek di `projects.js`.
 
@@ -140,8 +141,8 @@ Saat pertama kali push, Windows akan meminta login GitHub lewat browser. Ikuti s
 3. Klik **Connect GitHub**, izinkan Cloudflare mengakses repository `portfolio`.
 4. Pilih repository `portfolio` → **Begin setup**.
 5. Isi pengaturan build:
-   - **Project name**: `naufal-kaffah` → alamat situs menjadi `https://naufal-kaffah.pages.dev`
-     (jika nama sudah dipakai orang lain, pilih nama lain dan sesuaikan placeholder di `<head>` `index.html`)
+   - **Project name**: nama proyek menentukan alamat situs
+     (situs ini sekarang ada di `https://naufal-kaffah-digital-portofolio.nk02.workers.dev`; jika alamatnya berubah, sesuaikan 4 tag di `<head>` `index.html`)
    - **Production branch**: `main`
    - **Framework preset**: `None`
    - **Build command**: *(kosongkan)*
@@ -162,6 +163,6 @@ Cloudflare Pages otomatis membangun ulang situs dalam sekitar 1 menit.
 
 ### 5. Setelah online
 
-- Ganti semua `naufal-kaffah.pages.dev` di `<head>` `index.html` jika alamat Anda berbeda (agar gambar pratinjau tautan muncul saat dibagikan di WhatsApp/LinkedIn).
+- Pastikan 4 tag alamat di `<head>` `index.html` memakai alamat situs yang aktif (agar gambar pratinjau tautan muncul saat dibagikan di WhatsApp/LinkedIn).
 - Uji pratinjau tautan di <https://www.opengraph.xyz> atau LinkedIn Post Inspector.
 - (Opsional) Domain sendiri: di proyek Cloudflare Pages → **Custom domains** → **Set up a custom domain**.
