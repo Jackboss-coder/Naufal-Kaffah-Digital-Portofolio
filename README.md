@@ -21,7 +21,6 @@ Cari teks berikut (Ctrl+F) lalu ganti dengan data asli:
 
 | Placeholder | Lokasi |
 |---|---|
-| `[YOUR LINKEDIN]` dan `https://www.linkedin.com/in/[YOUR-LINKEDIN]` | `index.html`, bagian Contact |
 | `[YOUR METRIC]` (2×) | `index.html`, poin Marketing Administrator |
 | `[YOUR METRIC]` (3×) | `js/projects.js`, kolom `result` |
 | `naufal-kaffah.pages.dev` (3×) | `index.html`, bagian `<head>` — ganti jika alamat situs Anda berbeda |
