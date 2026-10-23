@@ -961,6 +961,74 @@ button { font: inherit; color: inherit; }
 }
 .verb__list li:hover { padding-left: 8px; color: var(--title); }
 
+/* Apps I work with: raised app-icon tiles grouped by purpose */
+.apps { margin-top: 96px; }
+.apps .sub-title { margin-bottom: 8px; }
+
+.apps__group {
+  display: grid;
+  gap: 12px;
+  padding: 24px 0;
+  border-bottom: 1px solid var(--border);
+}
+@media (min-width: 900px) {
+  .apps__group { grid-template-columns: 240px 1fr; align-items: center; gap: 24px; }
+}
+.apps__label {
+  color: var(--text-muted);
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.apps__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(104px, 1fr));
+  gap: 8px;
+}
+@media (min-width: 640px) { .apps__grid { grid-template-columns: repeat(auto-fill, minmax(136px, 1fr)); } }
+
+.app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 8px 14px;
+  border-radius: 18px;
+  text-align: center;
+  transition: background 0.25s;
+}
+.app:hover { background: var(--surface); }
+
+.app__icon {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border: 1px solid rgba(15, 42, 74, 0.08);
+  border-radius: 18px;
+  background: linear-gradient(180deg, #FFFFFF, #F3F6FA);
+  box-shadow: inset 0 1px 0 #FFFFFF, 0 5px 0 #DCE3ED, 0 16px 26px -14px rgba(15, 42, 74, 0.45);
+  transition: transform 0.5s var(--ease-out), box-shadow 0.5s var(--ease-out);
+}
+:root[data-theme="dark"] .app__icon {
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: inset 0 1px 0 #FFFFFF, 0 5px 0 #05080F, 0 16px 26px -14px rgba(0, 0, 0, 0.8);
+}
+.app__icon img { width: 36px; height: 36px; object-fit: contain; }
+.app:hover .app__icon {
+  transform: perspective(400px) translateY(-6px) rotateX(14deg);
+  box-shadow: inset 0 1px 0 #FFFFFF, 0 9px 0 #DCE3ED, 0 26px 34px -16px rgba(37, 99, 235, 0.5);
+}
+:root[data-theme="dark"] .app:hover .app__icon { box-shadow: inset 0 1px 0 #FFFFFF, 0 9px 0 #05080F, 0 26px 34px -16px rgba(96, 165, 250, 0.5); }
+.app__name { color: var(--title); font-size: 0.875rem; font-weight: 700; line-height: 1.3; }
+
+@media (min-width: 640px) {
+  .app__icon { width: 76px; height: 76px; border-radius: 22px; }
+  .app__icon img { width: 42px; height: 42px; }
+}
+
 .marquee {
   display: grid;
   gap: 4px;
