@@ -162,10 +162,10 @@ window.PROJECTS = [
     id: "bd-agent-team",
     title: "Business Development Agent Team",
     category: "AI & Automation",
-    image: "assets/img/projects/bd-agents-cover.png",
-    imageAlt: "Diagram of six AI subagents in two workflows: research (market-analyst, competitor-watch, opportunity-scout) and prospecting (prospect-hunter, deal-writer, deal-reviewer), ending with a human who sends",
+    image: "assets/img/projects/bd/test-cover.png",
+    imageAlt: "Stress-test results: 8 of 8 planted errors caught by the reviewer, 0 unverified prospects passed on, 2 of 2 traps refused by the writer",
     summary:
-      "Six Claude Code subagents that take business development from market research to a client-ready draft. A read-only reviewer must approve every draft, and only a person ever sends it.",
+      "Six Claude Code subagents that take business development from market research to a client-ready draft. Stress-tested end to end: the reviewer caught 8 of 8 planted errors, and no unverified prospect got through.",
     problem:
       "Business development mixes market research, prospecting and client writing. Done ad hoc, it produces market figures without sources, long unqualified lead lists, and proposals that promise discounts or results the company cannot back up.",
     approach: [
@@ -174,10 +174,26 @@ window.PROJECTS = [
       "Added human checkpoints: the user chooses which opportunities and which prospects move forward.",
       "Made deal-reviewer a read-only gate that returns BLOCK / FIX / NOTE findings and a ready / not-ready verdict; the writer never reviews its own work.",
       "Set hard rules: agents never send anything, never invent names, numbers or case studies (unsourced figures are tagged as assumptions), and only use personal data allowed under Indonesia's Personal Data Protection Law.",
-      "Gave every agent one shared company-context file — profile, ideal customer, prices, discount limits — so all six work from the same facts."
+      "Gave every agent one shared company-context file — profile, ideal customer, prices, discount limits — so all six work from the same facts.",
+      "Stress-tested the full research-to-prospecting run with a fictional coffee distributor selling into the real Cikarang–Bekasi–Karawang market, acting as the user at both checkpoints.",
+      "Planted traps for the writer and reviewer — a client who refused to be named, a 15% discount request against a 7% limit, invented urgency, a phone number from a private group — and re-checked every key calculation and five web sources by hand."
     ],
     result:
-      "A repeatable path from market research to a reviewed, ready-to-send draft, with people kept in charge of every message, meeting and signature.",
-    tools: ["Claude Code", "Subagents", "Web research", "Sales frameworks"]
+      "The reviewer caught 8 of 8 planted errors and ruled the flawed quote not ready to send. The writer refused both traps. Of about 30 real businesses screened, none was passed on without a documented pain point, and every break-even, lifetime-value, funnel and discount figure checked out. The run stopped exactly where it should: after two review rounds, with only price and contract decisions left for a person. Testing also exposed 6 weaknesses in the instructions — most notably a champion rule that two reviews read differently — which I fixed.",
+    tools: ["Claude Code", "Subagents", "Web research", "Sales frameworks", "Test design"],
+    galleryTitle: "Test evidence",
+    gallery: [
+      {
+        title: "Fictional-seller stress test, October 2026",
+        note: "rendered from the agents' own reports and reviews",
+        wide: true,
+        images: [
+          { src: "assets/img/projects/bd-agents-cover.png", alt: "Diagram of the two workflows: research (market-analyst, competitor-watch, opportunity-scout) and prospecting (prospect-hunter, deal-writer, deal-reviewer), with human checkpoints and a human who sends" },
+          { src: "assets/img/projects/bd/test-run.png", alt: "What each of the six agents produced in the test run, ending with a stop where the draft is handed to a person" },
+          { src: "assets/img/projects/bd/test-traps.png", alt: "Table of 8 errors planted in a draft quote, each caught by the reviewer as a blocker" },
+          { src: "assets/img/projects/bd/test-fixes.png", alt: "Six weaknesses in the agent instructions exposed by testing, each with its fix" }
+        ]
+      }
+    ]
   }
 ];
