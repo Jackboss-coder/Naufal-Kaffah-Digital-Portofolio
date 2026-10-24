@@ -16,6 +16,8 @@
     result    : paragraf "The result" di modal
     tools     : daftar tag tools
     links     : (opsional) daftar tautan, mis. [{ label: "View design", url: "https://..." }]
+    video     : (opsional) video di modal, mis. { src: "assets/video/x.mp4", poster: "assets/video/x.jpg", label: "..." }
+                MP4, idealnya < 5 MB. Video diputar otomatis tanpa suara saat modal dibuka.
     gallery   : (opsional) contoh hasil kerja di modal, dikelompokkan:
                 [{ title: "Judul", note: "keterangan", url: "tautan lihat (opsional)", images: [{ src: "assets/img/...", alt: "..." }] }]
                 Untuk Canva, pakai tautan yang berakhiran /view dan pastikan Share → "Anyone with the link" = "Can view".
@@ -97,8 +99,13 @@ window.PROJECTS = [
     id: "ai-agent-office",
     title: "AI Agent Office Visualization",
     category: "AI & Automation",
-    image: "assets/img/projects/ai-agent-office.svg",
-    imageAlt: "Isometric illustration of office desks on a grid",
+    image: "assets/img/projects/ai-agent-office.jpg",
+    imageAlt: "3D yacht scene where labelled AI subagents work, rest and fish on deck, with an activity log beside it",
+    video: {
+      src: "assets/video/ai-agent-office.mp4",
+      poster: "assets/video/ai-agent-office-poster.jpg",
+      label: "Screen recording of the visualization running in demo mode"
+    },
     summary:
       "It is hard to see what AI subagents are doing while they work. I built a real-time isometric visualization where each subagent walks to its desk and starts typing the moment it receives a task.",
     problem:

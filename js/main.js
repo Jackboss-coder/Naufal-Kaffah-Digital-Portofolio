@@ -158,6 +158,11 @@
 
     var media = el("div", "stack-card__media");
     media.appendChild(imageWithFallback(project.image, project.imageAlt));
+    if (project.video) {
+      var badge = el("span", "stack-card__badge");
+      badge.innerHTML = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg> Video demo';
+      media.appendChild(badge);
+    }
     card.appendChild(media);
 
     var body = el("div", "stack-card__body");
@@ -479,7 +484,23 @@
     modalContent.textContent = "";
 
     var media = el("div", "modal__media");
-    media.appendChild(imageWithFallback(p.image, p.imageAlt));
+    if (p.video && p.video.src) {
+      // Muted, looping demo; autoplay only when the visitor allows motion
+      media.classList.add("modal__media--video");
+      var video = el("video");
+      video.src = p.video.src;
+      if (p.video.poster) video.poster = p.video.poster;
+      video.muted = true;
+      video.loop = true;
+      video.controls = true;
+      video.playsInline = true;
+      video.preload = "metadata";
+      video.setAttribute("aria-label", p.video.label || p.title + " video");
+      if (!reduceMotion) video.autoplay = true;
+      media.appendChild(video);
+    } else {
+      media.appendChild(imageWithFallback(p.image, p.imageAlt));
+    }
     modalContent.appendChild(media);
 
     var body = el("div", "modal__body");
@@ -581,6 +602,7 @@
     });
 
     modal.addEventListener("close", function () {
+      modal.querySelectorAll("video").forEach(function (v) { v.pause(); });
       document.body.classList.remove("modal-open");
       if (lastTrigger) lastTrigger.focus();
     });

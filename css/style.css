@@ -896,7 +896,25 @@ button { font: inherit; color: inherit; }
 }
 .stack-card:focus-within { outline: 2px solid var(--accent); outline-offset: 4px; }
 
-.stack-card__media { aspect-ratio: 16 / 9; overflow: hidden; background: #0F2A4A; }
+.stack-card__media { position: relative; aspect-ratio: 16 / 9; overflow: hidden; background: #0F2A4A; }
+.stack-card__badge {
+  position: absolute;
+  left: 14px;
+  top: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px 6px 10px;
+  border-radius: 999px;
+  background: rgba(11, 18, 32, 0.78);
+  color: #FFFFFF;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+.stack-card__badge .icon { width: 14px; height: 14px; fill: currentColor; stroke: none; }
 .stack-card__media img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s var(--ease-out); }
 .stack-card:hover .stack-card__media img { transform: scale(1.05); }
 
@@ -1226,6 +1244,8 @@ button { font: inherit; color: inherit; }
 .modal__close { position: absolute; top: 12px; right: 12px; z-index: 2; }
 .modal__media { aspect-ratio: 16 / 8; background: #0F2A4A; }
 .modal__media img { width: 100%; height: 100%; object-fit: cover; }
+.modal__media--video { aspect-ratio: 16 / 9; background: #000; }
+.modal__media--video video { display: block; width: 100%; height: 100%; object-fit: contain; }
 .modal__body { padding: 24px 20px 28px; }
 @media (min-width: 640px) { .modal__body { padding: 36px 44px 44px; } }
 .modal__cat { color: var(--accent); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
