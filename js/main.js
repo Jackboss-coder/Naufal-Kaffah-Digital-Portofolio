@@ -504,6 +504,29 @@
       body.appendChild(section("Tools", tagList));
     }
 
+    if (p.gallery && p.gallery.length) {
+      var gallery = el("div", "gallery");
+      p.gallery.forEach(function (group) {
+        var g = el("figure", "gallery__group");
+        var strip = el("div", "gallery__strip");
+        (group.images || []).forEach(function (im) {
+          var img = el("img");
+          img.src = im.src;
+          img.alt = im.alt || "";
+          img.loading = "lazy";
+          img.decoding = "async";
+          strip.appendChild(img);
+        });
+        g.appendChild(strip);
+        var cap = el("figcaption", "gallery__caption");
+        cap.appendChild(el("strong", null, group.title));
+        if (group.note) cap.appendChild(el("span", null, group.note));
+        g.appendChild(cap);
+        gallery.appendChild(g);
+      });
+      body.appendChild(section("Made with this pipeline", gallery));
+    }
+
     if (p.links && p.links.length) {
       var links = el("div", "modal__links");
       p.links.forEach(function (l) {

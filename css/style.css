@@ -1261,6 +1261,29 @@ button { font: inherit; color: inherit; }
   font-weight: 600;
 }
 .modal__links { display: flex; flex-wrap: wrap; gap: 8px; }
+
+/* Work samples inside the project modal */
+.gallery { display: grid; gap: 22px; }
+.gallery__group { margin: 0; }
+.gallery__strip {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  align-items: start;
+}
+.gallery__strip img {
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  box-shadow: 0 10px 20px -14px rgba(15, 42, 74, 0.5);
+  transition: transform 0.4s var(--ease-out);
+}
+.gallery__strip img:hover { transform: translateY(-4px); }
+.gallery__caption { display: flex; flex-wrap: wrap; gap: 4px 10px; align-items: baseline; margin-top: 10px; }
+.gallery__caption strong { color: var(--title); font-size: 0.9375rem; }
+.gallery__caption span { color: var(--text-muted); font-family: var(--mono); font-size: 0.75rem; }
 .media-fallback { display: grid; place-items: center; width: 100%; height: 100%; color: #93B4E8; }
 .media-fallback .icon { width: 40px; height: 40px; stroke-width: 1.25; }
 

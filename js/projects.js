@@ -16,6 +16,8 @@
     result    : paragraf "The result" di modal
     tools     : daftar tag tools
     links     : (opsional) daftar tautan, mis. [{ label: "View design", url: "https://..." }]
+    gallery   : (opsional) contoh hasil kerja di modal, dikelompokkan:
+                [{ title: "Judul", note: "keterangan", images: [{ src: "assets/img/...", alt: "..." }] }]
 */
 window.PROJECTS = [
   {
@@ -42,8 +44,8 @@ window.PROJECTS = [
     id: "canva-content-agents",
     title: "Canva Content Agents",
     category: "AI & Automation",
-    image: "assets/img/projects/canva-content-agents.svg",
-    imageAlt: "Illustration of four connected nodes representing a content pipeline",
+    image: "assets/img/projects/canva-content-agents.jpg",
+    imageAlt: "Covers of three Instagram carousels made with the pipeline: workplace safety, IHSG market update and AI careers",
     summary:
       "Producing social media content consistently takes planning, writing, design and review. I set up a pipeline of Claude Code subagents connected to Canva, so every post moves from idea to reviewed design in one flow.",
     problem:
@@ -56,7 +58,36 @@ window.PROJECTS = [
     ],
     result:
       "A consistent, repeatable content workflow with a built-in quality gate before anything is published. Posts produced so far: [YOUR METRIC].",
-    tools: ["Claude Code", "Canva", "Canva MCP", "Prompt design"]
+    tools: ["Claude Code", "Canva", "Canva MCP", "Prompt design"],
+    gallery: [
+      {
+        title: "Workplace safety series — PT Citra Karsa Dinamika",
+        note: "18-slide company content",
+        images: [
+          { src: "assets/img/projects/canva/ckd-safety-1.jpg", alt: "Cover slide: Safety starts with your physical condition" },
+          { src: "assets/img/projects/canva/ckd-safety-2.jpg", alt: "Safety series slide 2" },
+          { src: "assets/img/projects/canva/ckd-safety-3.jpg", alt: "Safety series slide 3" }
+        ]
+      },
+      {
+        title: "IHSG market update carousel",
+        note: "6 slides, session I recap",
+        images: [
+          { src: "assets/img/projects/canva/ihsg-carousel-1.jpg", alt: "Cover slide: IHSG falls in the morning, turns green by midday" },
+          { src: "assets/img/projects/canva/ihsg-carousel-2.jpg", alt: "IHSG carousel slide 2" },
+          { src: "assets/img/projects/canva/ihsg-carousel-3.jpg", alt: "IHSG carousel slide 3" }
+        ]
+      },
+      {
+        title: "AI & robotics education carousel",
+        note: "5 square slides",
+        images: [
+          { src: "assets/img/projects/canva/ai-robotics-1.jpg", alt: "Cover slide: What to learn for the next five years in AI and robotics" },
+          { src: "assets/img/projects/canva/ai-robotics-2.jpg", alt: "AI and robotics carousel slide 2" },
+          { src: "assets/img/projects/canva/ai-robotics-3.jpg", alt: "AI and robotics carousel slide 3" }
+        ]
+      }
+    ]
   },
   {
     id: "ai-agent-office",
