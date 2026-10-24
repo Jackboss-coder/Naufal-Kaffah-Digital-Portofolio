@@ -497,11 +497,24 @@
       video.preload = "metadata";
       video.setAttribute("aria-label", p.video.label || p.title + " video");
       if (!reduceMotion) video.autoplay = true;
+      // If the browser can't play it, show the still frame instead
+      video.addEventListener("error", function () {
+        if (p.video.poster) video.replaceWith(imageWithFallback(p.video.poster, p.video.label || p.imageAlt));
+      });
       media.appendChild(video);
     } else {
       media.appendChild(imageWithFallback(p.image, p.imageAlt));
     }
     modalContent.appendChild(media);
+
+    if (p.video && p.video.url) {
+      var watch = el("a", "modal__watch");
+      watch.href = p.video.url;
+      watch.target = "_blank";
+      watch.rel = "noopener";
+      watch.innerHTML = "Video not playing? Watch it on Canva " + ARROW_ICON;
+      modalContent.appendChild(watch);
+    }
 
     var body = el("div", "modal__body");
     body.appendChild(el("p", "modal__cat", p.category));
