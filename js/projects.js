@@ -159,23 +159,25 @@ window.PROJECTS = [
     tools: ["Claude Code", "Web research", "Technical analysis", "PowerShell"]
   },
   {
-    id: "idx-market-carousel",
-    title: "IDX Market Instagram Carousel",
-    category: "Content Design",
-    image: "assets/img/projects/idx-market-carousel.svg",
-    imageAlt: "Illustration of stacked Instagram carousel slides with a line chart",
+    id: "bd-agent-team",
+    title: "Business Development Agent Team",
+    category: "AI & Automation",
+    image: "assets/img/projects/bd-agents-cover.png",
+    imageAlt: "Diagram of six AI subagents in two workflows: research (market-analyst, competitor-watch, opportunity-scout) and prospecting (prospect-hunter, deal-writer, deal-reviewer), ending with a human who sends",
     summary:
-      "Market updates go stale within hours, so a static post is outdated by the close. I designed an Instagram carousel on the Jakarta Composite Index (IHSG) that is updated from intraday figures to closing data.",
+      "Six Claude Code subagents that take business development from market research to a client-ready draft. A read-only reviewer must approve every draft, and only a person ever sends it.",
     problem:
-      "Followers need a quick, accurate read on the market, but rebuilding a carousel from scratch for every update is slow and risks inconsistent design.",
+      "Business development mixes market research, prospecting and client writing. Done ad hoc, it produces market figures without sources, long unqualified lead lists, and proposals that promise discounts or results the company cannot back up.",
     approach: [
-      "Designed a compact 5–6 slide layout where every slide carries real information — no filler slides.",
-      "Built the carousel in Canva with a fixed grid, fonts and colour system.",
-      "Updated index levels, movers and context from intraday to closing data on the same design.",
-      "Checked every figure against the source before publishing."
+      "Split the work into two workflows that run alone or chained: Research (market-analyst and competitor-watch feeding opportunity-scout) and Prospecting (prospect-hunter, deal-writer, deal-reviewer).",
+      "Built each agent on established frameworks: TAM/SAM/SOM, PESTEL and STP; Porter's Five Forces and 4P; VPC, BMC, SWOT and Ansoff; BANT and lead scoring; SPIN and MEDDIC.",
+      "Added human checkpoints: the user chooses which opportunities and which prospects move forward.",
+      "Made deal-reviewer a read-only gate that returns BLOCK / FIX / NOTE findings and a ready / not-ready verdict; the writer never reviews its own work.",
+      "Set hard rules: agents never send anything, never invent names, numbers or case studies (unsourced figures are tagged as assumptions), and only use personal data allowed under Indonesia's Personal Data Protection Law.",
+      "Gave every agent one shared company-context file — profile, ideal customer, prices, discount limits — so all six work from the same facts."
     ],
     result:
-      "A reusable market carousel template that can be refreshed quickly while keeping data accurate and the brand consistent. Reach or engagement: [YOUR METRIC].",
-    tools: ["Canva", "Claude Code", "Market data", "Copywriting"]
+      "A repeatable path from market research to a reviewed, ready-to-send draft, with people kept in charge of every message, meeting and signature.",
+    tools: ["Claude Code", "Subagents", "Web research", "Sales frameworks"]
   }
 ];

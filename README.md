@@ -21,7 +21,7 @@ Cari teks berikut (Ctrl+F) lalu ganti dengan data asli:
 
 | Placeholder | Lokasi |
 |---|---|
-| `[YOUR METRIC]` (2×) | `js/projects.js`, kolom `result` |
+| `[YOUR METRIC]` (1×) | `js/projects.js`, kolom `result` |
 
 Alamat situs: <https://naufal-kaffah-digital-portofolio.nk02.workers.dev> (Cloudflare Workers, deploy otomatis dari branch `main`).
 Alamat ini dipakai di 4 tag `<head>` `index.html` (canonical, og:url, og:image, twitter:image); ganti di sana jika alamatnya berubah.
