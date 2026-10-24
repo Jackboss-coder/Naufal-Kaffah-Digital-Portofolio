@@ -1034,7 +1034,7 @@ button { font: inherit; color: inherit; }
   grid-template-columns: repeat(auto-fill, minmax(104px, 1fr));
   gap: 8px;
 }
-@media (min-width: 640px) { .apps__grid { grid-template-columns: repeat(auto-fill, minmax(136px, 1fr)); } }
+@media (min-width: 640px) { .apps__grid { grid-template-columns: repeat(auto-fill, minmax(112px, 1fr)); } }
 
 .app {
   display: flex;
