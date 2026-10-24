@@ -1314,6 +1314,8 @@ button { font: inherit; color: inherit; }
   transition: transform 0.4s var(--ease-out);
 }
 .gallery__strip img:hover { transform: translateY(-4px); }
+.gallery__strip--wide { grid-template-columns: 1fr; gap: 14px; }
+.gallery__strip--wide img:hover { transform: none; }
 .gallery__caption { display: flex; flex-wrap: wrap; gap: 4px 10px; align-items: baseline; margin-top: 10px; }
 .gallery__caption strong { color: var(--title); font-size: 0.9375rem; }
 .gallery__caption span { color: var(--text-muted); font-family: var(--mono); font-size: 0.75rem; }

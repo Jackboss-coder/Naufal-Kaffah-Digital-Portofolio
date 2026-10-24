@@ -21,6 +21,8 @@
     gallery   : (opsional) contoh hasil kerja di modal, dikelompokkan:
                 [{ title: "Judul", note: "keterangan", url: "tautan lihat (opsional)", images: [{ src: "assets/img/...", alt: "..." }] }]
                 Untuk Canva, pakai tautan yang berakhiran /view dan pastikan Share → "Anyone with the link" = "Can view".
+                Tambahkan wide: true pada grup agar gambar tampil selebar modal, satu per baris (untuk tabel/bukti yang perlu dibaca).
+    galleryTitle : (opsional) judul bagian galeri di modal; bawaan "Made with this pipeline"
 */
 window.PROJECTS = [
   {
@@ -43,7 +45,20 @@ window.PROJECTS = [
     ],
     result:
       "36 of 36 journal entries, the trial balance (39 accounts), payables and receivables sub-ledgers and all four financial statements matched the answer key to the last rupiah, and 9 of 9 faulty transactions were rejected with the correct error code. The agents never modified the human input file. Testing also exposed 6 weaknesses — the most serious, a validator that missed a tampered adjusting entry — which I fixed and re-verified.",
-    tools: ["Claude Code", "Subagents", "Python", "Excel", "Test design"]
+    tools: ["Claude Code", "Subagents", "Python", "Excel", "Test design"],
+    galleryTitle: "Test evidence",
+    gallery: [
+      {
+        title: "Fictional-company stress test, October 2026",
+        note: "rendered from the agents' own output files",
+        wide: true,
+        images: [
+          { src: "assets/img/projects/accounting/test-exceptions.png", alt: "Table of 9 deliberately faulty transactions, each rejected by the agents with an error code such as ARI-01, REF-03 and DUP-01" },
+          { src: "assets/img/projects/accounting/test-statements.png", alt: "Income statement and balance sheet produced by the agents: net revenue 132,000,000, net profit 23,022,500, total assets 800,805,000, balance check 0" },
+          { src: "assets/img/projects/accounting/test-verification.png", alt: "Verification checklist: 7 of 7 comparisons against an independent answer key passed, plus a validator sabotage test before and after the fix" }
+        ]
+      }
+    ]
   },
   {
     id: "canva-content-agents",

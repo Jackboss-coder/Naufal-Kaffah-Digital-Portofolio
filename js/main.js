@@ -542,7 +542,7 @@
       var gallery = el("div", "gallery");
       p.gallery.forEach(function (group) {
         var g = el("figure", "gallery__group");
-        var strip = el("div", "gallery__strip");
+        var strip = el("div", group.wide ? "gallery__strip gallery__strip--wide" : "gallery__strip");
         (group.images || []).forEach(function (im) {
           var img = el("img");
           img.src = im.src;
@@ -567,7 +567,7 @@
         g.appendChild(cap);
         gallery.appendChild(g);
       });
-      body.appendChild(section("Made with this pipeline", gallery));
+      body.appendChild(section(p.galleryTitle || "Made with this pipeline", gallery));
     }
 
     if (p.links && p.links.length) {
