@@ -17,7 +17,8 @@
     tools     : daftar tag tools
     links     : (opsional) daftar tautan, mis. [{ label: "View design", url: "https://..." }]
     gallery   : (opsional) contoh hasil kerja di modal, dikelompokkan:
-                [{ title: "Judul", note: "keterangan", images: [{ src: "assets/img/...", alt: "..." }] }]
+                [{ title: "Judul", note: "keterangan", url: "tautan lihat (opsional)", images: [{ src: "assets/img/...", alt: "..." }] }]
+                Untuk Canva, pakai tautan yang berakhiran /view dan pastikan Share → "Anyone with the link" = "Can view".
 */
 window.PROJECTS = [
   {
@@ -63,6 +64,7 @@ window.PROJECTS = [
       {
         title: "Workplace safety series — PT Citra Karsa Dinamika",
         note: "18-slide company content",
+        url: "https://www.canva.com/design/DAHWeCl7ylI/xJgXg8E6N-heTmBC8rt4CQ/view",
         images: [
           { src: "assets/img/projects/canva/ckd-safety-1.jpg", alt: "Cover slide: Safety starts with your physical condition" },
           { src: "assets/img/projects/canva/ckd-safety-2.jpg", alt: "Safety series slide 2" },
@@ -72,6 +74,7 @@ window.PROJECTS = [
       {
         title: "IHSG market update carousel",
         note: "6 slides, session I recap",
+        url: "https://www.canva.com/design/DAHYuPyWiOo/AoABMje2zuBusgjedrSrhg/view",
         images: [
           { src: "assets/img/projects/canva/ihsg-carousel-1.jpg", alt: "Cover slide: IHSG falls in the morning, turns green by midday" },
           { src: "assets/img/projects/canva/ihsg-carousel-2.jpg", alt: "IHSG carousel slide 2" },
@@ -81,6 +84,7 @@ window.PROJECTS = [
       {
         title: "AI & robotics education carousel",
         note: "5 square slides",
+        url: "https://www.canva.com/design/DAHX8jn-vK8/uvqbT2pOo86Oo3IcHNqxhA/view",
         images: [
           { src: "assets/img/projects/canva/ai-robotics-1.jpg", alt: "Cover slide: What to learn for the next five years in AI and robotics" },
           { src: "assets/img/projects/canva/ai-robotics-2.jpg", alt: "AI and robotics carousel slide 2" },

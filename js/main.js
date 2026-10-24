@@ -521,6 +521,15 @@
         var cap = el("figcaption", "gallery__caption");
         cap.appendChild(el("strong", null, group.title));
         if (group.note) cap.appendChild(el("span", null, group.note));
+        if (group.url) {
+          var view = el("a", "gallery__link");
+          view.href = group.url;
+          view.target = "_blank";
+          view.rel = "noopener";
+          view.innerHTML = "View full design on Canva " + ARROW_ICON;
+          view.setAttribute("aria-label", "View " + group.title + " on Canva (opens in a new tab)");
+          cap.appendChild(view);
+        }
         g.appendChild(cap);
         gallery.appendChild(g);
       });
