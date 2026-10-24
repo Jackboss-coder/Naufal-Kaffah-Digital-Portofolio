@@ -30,18 +30,20 @@ window.PROJECTS = [
     image: "assets/img/projects/ai-accounting-agents.svg",
     imageAlt: "Illustration of a ledger table with a verification check mark",
     summary:
-      "Manual bookkeeping in spreadsheets is slow and easy to get wrong. I built a team of five Claude Code subagents that runs the cycle from general journal to financial statements while staff only input and verify.",
+      "Five Claude Code subagents that run bookkeeping from journal to financial statements. Tested on a fictional company: every figure matched an independent answer key, and 9 of 9 faulty transactions were caught.",
     problem:
-      "Recording transactions, posting to the ledger, making adjustments and preparing reports by hand takes hours each period, and a single mistyped cell can silently break the statements.",
+      "Recording transactions, posting to the ledger, making adjustments and preparing reports by hand takes hours each period, and a single mistyped cell can silently break the statements. An AI bookkeeper is only useful if it can be proven right — and if it refuses bad data instead of guessing.",
     approach: [
       "Designed a clear division of work: people enter and verify source data, agents journalize, post and report.",
       "Built five specialised subagents — journal, ledger, adjustments, validation and reporting — each with its own rules and responsibilities.",
       "Set up a two-workbook contract: a 19-sheet input workbook that agents may only read, and a 10-sheet book workbook that only agents write.",
-      "Added a validation step and automatic backups so every run can be checked and rolled back."
+      "Added a validation step and automatic backups so every run can be checked and rolled back.",
+      "Stress-tested the system with one month of a fictional coffee distributor (PKP, SAK EP): 42 source transactions, 9 of them deliberately wrong, plus month-end close and controller approval of adjusting entries.",
+      "Wrote an independent answer key by hand and an automated comparison script, then sabotaged the books on purpose to test the validator."
     ],
     result:
-      "A repeatable, semi-automated bookkeeping flow from general journal to financial statements, with human approval kept at every critical decision. Time saved per closing: [YOUR METRIC].",
-    tools: ["Claude Code", "Subagents", "Python", "Excel"]
+      "36 of 36 journal entries, the trial balance (39 accounts), payables and receivables sub-ledgers and all four financial statements matched the answer key to the last rupiah, and 9 of 9 faulty transactions were rejected with the correct error code. The agents never modified the human input file. Testing also exposed 6 weaknesses — the most serious, a validator that missed a tampered adjusting entry — which I fixed and re-verified.",
+    tools: ["Claude Code", "Subagents", "Python", "Excel", "Test design"]
   },
   {
     id: "canva-content-agents",
