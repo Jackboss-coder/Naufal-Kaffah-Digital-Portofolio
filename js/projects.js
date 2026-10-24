@@ -29,8 +29,8 @@ window.PROJECTS = [
     id: "ai-accounting-agents",
     title: "AI Accounting Agent System",
     category: "AI & Automation",
-    image: "assets/img/projects/ai-accounting-agents.svg",
-    imageAlt: "Illustration of a ledger table with a verification check mark",
+    image: "assets/img/projects/accounting/test-cover.png?v=2",
+    imageAlt: "Stress-test results: 36 of 36 journal entries match the answer key, 9 of 9 planted faulty transactions caught, Rp 0 difference in the financial statements",
     summary:
       "Five Claude Code subagents that run bookkeeping from journal to financial statements. Tested on a fictional company: every figure matched an independent answer key, and 9 of 9 faulty transactions were caught.",
     problem:
