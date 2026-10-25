@@ -35,7 +35,7 @@ window.PROJECTS = [
     id: "ai-accounting-agents",
     title: { en: "AI Accounting Agent System", id: "Sistem Agent Akuntansi AI" },
     category: "AI & Automation",
-    image: "assets/img/projects/accounting/test-cover.png?v=2",
+    image: "assets/img/projects/accounting/test-cover.webp",
     imageAlt: {
       en: "Stress-test results: 36 of 36 journal entries match the answer key, 9 of 9 planted faulty transactions caught, Rp 0 difference in the financial statements",
       id: "Hasil uji tekanan: 36 dari 36 jurnal cocok dengan kunci jawaban, 9 dari 9 transaksi keliru yang sengaja disisipkan tertangkap, selisih Rp 0 pada laporan keuangan"
@@ -219,7 +219,7 @@ window.PROJECTS = [
     id: "idx-stock-screening",
     title: { en: "Daily Stock Screening (IDX)", id: "Screening Saham Harian (BEI)" },
     category: "Data & Analysis",
-    image: "assets/img/projects/idx/test-cover.png",
+    image: "assets/img/projects/idx/test-cover.webp",
     imageAlt: {
       en: "Stress-test results: 53 of 53 indicator values match an independent check, 9 of 9 planted errors caught by the risk-manager, 0 trades forced in a falling market",
       id: "Hasil uji tekanan: 53 dari 53 nilai indikator cocok dengan pemeriksaan independen, 9 dari 9 kesalahan yang disisipkan ditangkap risk-manager, 0 transaksi dipaksakan saat pasar turun"
@@ -298,7 +298,7 @@ window.PROJECTS = [
     id: "bd-agent-team",
     title: { en: "Business Development Agent Team", id: "Tim Agent Business Development" },
     category: "AI & Automation",
-    image: "assets/img/projects/bd/test-cover.png",
+    image: "assets/img/projects/bd/test-cover.webp",
     imageAlt: {
       en: "Stress-test results: 8 of 8 planted errors caught by the reviewer, 0 unverified prospects passed on, 2 of 2 traps refused by the writer",
       id: "Hasil uji tekanan: 8 dari 8 kesalahan yang disisipkan ditangkap reviewer, 0 prospek tak terverifikasi diteruskan, 2 dari 2 jebakan ditolak writer"
@@ -346,7 +346,7 @@ window.PROJECTS = [
         wide: true,
         images: [
           {
-            src: "assets/img/projects/bd-agents-cover.png",
+            src: "assets/img/projects/bd-agents-cover.webp",
             alt: {
               en: "Diagram of the two workflows: research (market-analyst, competitor-watch, opportunity-scout) and prospecting (prospect-hunter, deal-writer, deal-reviewer), with human checkpoints and a human who sends",
               id: "Diagram dua alur kerja: riset (market-analyst, competitor-watch, opportunity-scout) dan prospecting (prospect-hunter, deal-writer, deal-reviewer), dengan checkpoint manusia dan manusia yang mengirim"

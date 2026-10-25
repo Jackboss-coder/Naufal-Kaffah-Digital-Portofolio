@@ -25,15 +25,29 @@ Angka sorotan di bagian About (`5+` tahun, `5` peran, `5` sertifikat) diambil da
 
 ## Mengganti foto profil
 
-Foto saat ini: `assets/img/profile.png` — latar sudah dihapus (transparan), ukuran 520×792 px.
+Foto saat ini: `assets/img/profile.webp` — latar sudah dihapus (transparan), ukuran 520×792 px.
 Di situs, panel biru lebih pendek dari foto, sehingga kepala keluar dari atas panel.
 
 Untuk mengganti foto:
 1. Siapkan foto setengah badan dengan **latar transparan** (PNG), rasio 520×792 (lebar × tinggi).
    Rambut sebaiknya ±3% dari atas gambar, dan badan sampai ke tepi bawah.
    Penghapus latar gratis: fitur "Remove background" di Canva atau remove.bg.
-2. Simpan dengan nama `profile.png` di `assets/img/` (timpa file lama).
+2. Ubah ke WebP (lihat **Format gambar** di bawah), lalu simpan dengan nama `profile.webp` di `assets/img/` (timpa file lama).
 3. Jika file dihapus, panel biru otomatis menampilkan monogram "NK".
+
+## Format gambar (WebP)
+
+Foto profil dan gambar sampul proyek memakai **WebP**: ukurannya sekitar 90% lebih kecil dari PNG tanpa terlihat berbeda,
+jadi situs lebih cepat terbuka di HP. Versi PNG aslinya disimpan di `..\portfolio-sumber\gambar-asli-png\` (tidak di-upload).
+
+Mengubah gambar baru ke WebP (butuh Python + Pillow, sekali pasang: `python -m pip install Pillow`):
+
+```powershell
+python ..\portfolio-sumber\ubah-ke-webp.py assets\img\projects\gambar-baru.png
+```
+
+File `.webp` muncul di sebelah file aslinya. Pakai nama `.webp` itu di `projects.js` / `index.html`, lalu naikkan `?v=...`.
+Gambar pratinjau tautan (`og-image.png`) **tetap PNG**, karena tidak semua aplikasi (WhatsApp, LinkedIn) membaca WebP.
 
 ## Mengganti CV
 
