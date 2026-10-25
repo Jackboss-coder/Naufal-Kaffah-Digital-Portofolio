@@ -142,21 +142,37 @@ window.PROJECTS = [
     id: "idx-stock-screening",
     title: "Daily Stock Screening (IDX)",
     category: "Data & Analysis",
-    image: "assets/img/projects/idx-stock-screening.svg",
-    imageAlt: "Illustration of a candlestick chart with an upward trend",
+    image: "assets/img/projects/idx/test-cover.png",
+    imageAlt: "Stress-test results: 53 of 53 indicator values match an independent check, 9 of 9 planted errors caught by the risk-manager, 0 trades forced in a falling market",
     summary:
-      "Finding swing-trading candidates on the Indonesia Stock Exchange each morning means reviewing far more data than one person can read before the open. I built a screening agent that scores stocks before the market opens and produces a ranked, ready-to-read report.",
+      "A screening agent that scores Indonesia Stock Exchange stocks for swing trades, checked by a separate risk-manager agent. Stress-tested on live data: 53 of 53 indicator values matched an independent check, and 9 of 9 planted errors were caught.",
     problem:
       "Manual screening is time-consuming and inconsistent: different days used different criteria, which made results hard to compare.",
     approach: [
       "Defined a fixed scoring model for 1–4 week swing trades: 50% technical, 25% narrative, 25% fundamental.",
       "Built a Claude Code subagent that screens either a given ticker list or the whole market.",
       "Standardised the output: ranking, score per pillar, entry area, price target and risk limit.",
-      "Scheduled the run every morning before the market opens and saved each report for follow-up content."
+      "Scheduled the run every morning before the market opens and saved each report for follow-up content.",
+      "Added a review-only risk-manager agent that re-checks the market regime, every reward-to-risk ratio, stop distance and tick size, upcoming earnings dates and sector concentration before a report can be used.",
+      "Stress-tested both agents on live data: recomputed the indicators independently in Python, sent the screener a request with a fake ticker, an illiquid stock and an order with a PIN, and gave the risk-manager a report with nine planted errors."
     ],
     result:
-      "A consistent daily shortlist with transparent scores, ready before the opening bell. For research and learning only — not investment advice; the agent never executes trades.",
-    tools: ["Claude Code", "Web research", "Technical analysis", "PowerShell"]
+      "All 53 indicator values matched the independent recalculation. In a falling (risk-off) market the screener correctly forced no trades, dropped the illiquid stock and the non-existent ticker without inventing data, and refused to place the order or use the PIN. The risk-manager caught 9 of 9 planted errors and sent the report back, then caught a tick-size slip and two mislabelled figures in the screener's real report. Testing exposed 5 weaknesses in the instructions, which I fixed. For research and learning only — not investment advice; neither agent executes trades.",
+    tools: ["Claude Code", "Web research", "Technical analysis", "PowerShell", "Test design"],
+    galleryTitle: "Test evidence",
+    gallery: [
+      {
+        title: "Live-data stress test, prices as of 23 October 2026",
+        note: "rendered from the agents' own reports and an independent indicator check",
+        wide: true,
+        images: [
+          { src: "assets/img/projects/idx/test-screener.png", alt: "Screener run on a request with a fake ticker, an illiquid stock and an order with a PIN: risk-off regime, both bad tickers dropped, order refused, no setup qualifies" },
+          { src: "assets/img/projects/idx/test-indicators.png", alt: "Table of indicator values for IHSG and five stocks, all matching an independent recalculation, 53 of 53" },
+          { src: "assets/img/projects/idx/test-traps.png", alt: "Table of nine errors planted in a screener report, each caught by the risk-manager" },
+          { src: "assets/img/projects/idx/test-fixes.png", alt: "Five weaknesses in the agent instructions exposed by testing, each with its fix" }
+        ]
+      }
+    ]
   },
   {
     id: "bd-agent-team",
