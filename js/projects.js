@@ -135,8 +135,8 @@ window.PROJECTS = [
       ]
     },
     result: {
-      en: "A consistent, repeatable content workflow with a built-in quality gate before anything is published. Posts produced so far: [YOUR METRIC].",
-      id: "Alur kerja konten yang konsisten dan bisa diulang, dengan gerbang kualitas bawaan sebelum apa pun dipublikasikan. Postingan yang sudah diproduksi: [YOUR METRIC]."
+      en: "A consistent, repeatable content workflow with a built-in quality gate before anything is published.",
+      id: "Alur kerja konten yang konsisten dan bisa diulang, dengan gerbang kualitas bawaan sebelum apa pun dipublikasikan."
     },
     tools: ["Claude Code", "Canva", "Canva MCP", { en: "Prompt design", id: "Desain prompt" }],
     gallery: [

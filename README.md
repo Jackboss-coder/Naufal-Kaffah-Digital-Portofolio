@@ -16,13 +16,7 @@ Bisa dibuka langsung dengan klik dua kali `index.html`, dan siap di-hosting grat
 /assets/cv.pdf         ← CV yang diunduh pengunjung
 ```
 
-## Yang masih perlu Anda isi
-
-Cari teks berikut (Ctrl+F) lalu ganti dengan data asli:
-
-| Placeholder | Lokasi |
-|---|---|
-| `[YOUR METRIC]` (2×: versi `en` dan `id`) | `js/projects.js`, kolom `result` proyek Canva Content Agents |
+## Alamat situs
 
 Alamat situs: <https://naufal-kaffah-digital-portofolio.nk02.workers.dev> (Cloudflare Workers, deploy otomatis dari branch `main`).
 Alamat ini dipakai di 4 tag `<head>` `index.html` (canonical, og:url, og:image, twitter:image); ganti di sana jika alamatnya berubah.
