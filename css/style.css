@@ -245,6 +245,32 @@ button { font: inherit; color: inherit; }
 .icon-btn:hover { border-color: var(--accent); color: var(--accent); }
 .theme-toggle:hover { transform: rotate(-20deg); }
 
+/* Language toggle: both codes visible, the active one highlighted */
+.lang-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 40px;
+  padding: 0 12px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--bg);
+  color: var(--text-muted);
+  font: inherit;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+.lang-toggle:hover { border-color: var(--accent); }
+.lang-toggle__sep { opacity: 0.5; font-weight: 500; }
+:root[lang="en"] .lang-toggle [data-lang="en"],
+:root[lang="id"] .lang-toggle [data-lang="id"] { color: var(--accent); }
+
+/* Hidden only until js/main.js has applied a non-English language (see the script in <head>) */
+.lang-pending body { visibility: hidden; }
+
 /* ==========================================================================
    Header / navigation
    ========================================================================== */
@@ -290,6 +316,7 @@ button { font: inherit; color: inherit; }
 .brand:hover .brand__mark { transform: rotate(-8deg) scale(1.06); background: var(--accent); }
 
 .nav__links { display: flex; align-items: center; gap: 4px; }
+.brand__name { white-space: nowrap; }
 .nav__links a:not(.btn) {
   position: relative;
   display: block;
@@ -314,6 +341,19 @@ button { font: inherit; color: inherit; }
 }
 .nav__links a.is-active { color: var(--title); }
 .nav__links a.is-active::after { transform: scaleX(1); }
+/* Small phones: compact header so the brand, EN/ID toggle, theme and menu buttons fit one row */
+@media (max-width: 399px) {
+  .nav { gap: 8px; }
+  .nav__actions { gap: 4px; }
+  .brand { gap: 8px; }
+  .lang-toggle { padding: 0 9px; gap: 2px; }
+}
+@media (max-width: 359px) { .brand__name { white-space: normal; line-height: 1.1; } }
+/* Narrow desktops: tighter links so the brand, links and EN/ID toggle share one row */
+@media (min-width: 900px) and (max-width: 1099px) {
+  .nav__links a:not(.btn) { padding: 8px 10px; }
+  .nav__links a:not(.btn)::after { left: 10px; right: 10px; }
+}
 
 .nav__actions { display: flex; align-items: center; gap: 8px; }
 .nav__menu-cv { display: none; }
@@ -994,6 +1034,9 @@ button { font: inherit; color: inherit; }
 
 .verbs { display: grid; gap: 48px; }
 @media (min-width: 900px) { .verbs { grid-template-columns: repeat(3, 1fr); gap: 40px; } }
+/* Indonesian verbs ("Otomatiskan") are about twice as long; size them to fit their column */
+:lang(id) .verb__word { font-size: min(clamp(3.5rem, 2rem + 4.5vw, 6rem), 15vw); }
+@media (min-width: 900px) { :lang(id) .verb__word { font-size: clamp(2.5rem, 4.4vw, 3.6rem); } }
 
 .verb { padding-top: 20px; border-top: 1.5px solid var(--title); }
 .verb__num { color: var(--text-muted); font-family: var(--mono); font-size: 0.8125rem; }

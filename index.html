@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Naufal Kaffah — Business Development &amp; Operations</title>
-  <meta name="description" content="Naufal Kaffah — Business Development & Operations professional based in Cikarang, Indonesia. Grow it. Run it. Automate it.">
+  <title data-i18n="meta.title">Naufal Kaffah — Business Development &amp; Operations</title>
+  <meta name="description" data-i18n-attr="content:meta.description" content="Naufal Kaffah — Business Development & Operations professional based in Cikarang, Indonesia. Grow it. Run it. Automate it.">
   <meta name="author" content="Naufal Kaffah">
   <meta name="theme-color" content="#FFFFFF">
 
@@ -23,13 +23,29 @@
 
   <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 
-  <!-- Light by default; a saved choice wins. Set before first paint to avoid a colour flash. -->
+  <!-- Light by default; a saved choice wins. Set before first paint to avoid a colour flash.
+       Language: a saved choice wins, then the browser's language (Indonesian or English), else English.
+       Non-English pages stay hidden until js/main.js has translated them (at most 2 seconds). -->
   <script>
     (function () {
-      var t;
-      try { t = localStorage.getItem("theme"); } catch (e) {}
-      document.documentElement.setAttribute("data-theme", t === "dark" ? "dark" : "light");
-      document.documentElement.classList.add("js");
+      var root = document.documentElement, t, l;
+      try { t = localStorage.getItem("theme"); l = localStorage.getItem("lang"); } catch (e) {}
+      root.setAttribute("data-theme", t === "dark" ? "dark" : "light");
+      root.classList.add("js");
+      if (l !== "en" && l !== "id") {
+        l = "en";
+        var prefs = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || ""];
+        for (var i = 0; i < prefs.length; i++) {
+          var p = String(prefs[i]).toLowerCase().slice(0, 2);
+          if (p === "id" || p === "in") { l = "id"; break; }
+          if (p === "en") break;
+        }
+      }
+      root.setAttribute("lang", l);
+      if (l !== "en") {
+        root.classList.add("lang-pending");
+        setTimeout(function () { root.classList.remove("lang-pending"); }, 2000);
+      }
     })();
   </script>
 
@@ -37,35 +53,38 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap">
   <link rel="preload" as="image" href="assets/img/profile.png">
-  <link rel="stylesheet" href="css/style.css?v=20261025a">
+  <link rel="stylesheet" href="css/style.css?v=20261025b">
 </head>
 <body>
-  <a class="skip-link" href="#main">Skip to content</a>
+  <a class="skip-link" href="#main" data-i18n="skip">Skip to content</a>
   <div class="scroll-progress" aria-hidden="true"></div>
 
   <!-- ============ NAVBAR ============ -->
   <header class="site-header">
-    <nav class="nav container" aria-label="Main">
-      <a class="brand" href="#top" aria-label="Naufal Kaffah, back to top">
+    <nav class="nav container" aria-label="Main" data-i18n-attr="aria-label:nav.label">
+      <a class="brand" href="#top" aria-label="Naufal Kaffah, back to top" data-i18n-attr="aria-label:nav.brand">
         <span class="brand__mark" aria-hidden="true">NK</span>
         <span class="brand__name">Naufal Kaffah</span>
       </a>
 
       <ul class="nav__links" id="nav-menu">
-        <li><a href="#about">About</a></li>
-        <li><a href="#journey">Journey</a></li>
-        <li><a href="#projects">Lab</a></li>
-        <li><a href="#skills">Skills</a></li>
-        <li><a href="#contact">Contact</a></li>
-        <li class="nav__menu-cv"><a class="btn btn--primary" href="assets/cv.pdf" download="Naufal_Kaffah_CV.pdf">Download CV</a></li>
+        <li><a href="#about" data-i18n="nav.about">About</a></li>
+        <li><a href="#journey" data-i18n="nav.journey">Journey</a></li>
+        <li><a href="#projects" data-i18n="nav.lab">Lab</a></li>
+        <li><a href="#skills" data-i18n="nav.skills">Skills</a></li>
+        <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
+        <li class="nav__menu-cv"><a class="btn btn--primary" href="assets/cv.pdf" download="Naufal_Kaffah_CV.pdf" data-i18n="cv.download">Download CV</a></li>
       </ul>
 
       <div class="nav__actions">
+        <button class="lang-toggle" type="button" aria-label="Switch language to Bahasa Indonesia">
+          <span data-lang="en">EN</span><span class="lang-toggle__sep" aria-hidden="true">/</span><span data-lang="id">ID</span>
+        </button>
         <button class="icon-btn theme-toggle" type="button" aria-label="Switch to dark mode">
           <svg class="icon icon--moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
           <svg class="icon icon--sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
         </button>
-        <a class="btn btn--primary btn--sm nav__cv" href="assets/cv.pdf" download="Naufal_Kaffah_CV.pdf">Download CV</a>
+        <a class="btn btn--primary btn--sm nav__cv" href="assets/cv.pdf" download="Naufal_Kaffah_CV.pdf" data-i18n="cv.download">Download CV</a>
         <button class="icon-btn nav__toggle" type="button" aria-expanded="false" aria-controls="nav-menu" aria-label="Open menu">
           <svg class="icon icon--menu" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
           <svg class="icon icon--close" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
@@ -81,24 +100,24 @@
         <div class="hero__copy">
           <p class="hero__status in" style="--d:0">
             <span class="status-dot" aria-hidden="true"></span>
-            Open to Business Development &amp; staff roles
+            <span data-i18n="hero.status">Open to Business Development &amp; staff roles</span>
           </p>
 
           <!-- Motto: tiap baris muncul bergantian -->
           <p class="motto">
-            <span class="motto__line" style="--d:1"><span>Grow it.</span></span>
-            <span class="motto__line" style="--d:2"><span>Run it.</span></span>
-            <span class="motto__line motto__line--accent" style="--d:3"><span>Automate it.</span></span>
+            <span class="motto__line" style="--d:1"><span data-i18n="motto.1">Grow it.</span></span>
+            <span class="motto__line" style="--d:2"><span data-i18n="motto.2">Run it.</span></span>
+            <span class="motto__line motto__line--accent" style="--d:3"><span data-i18n="motto.3">Automate it.</span></span>
           </p>
 
-          <h1 class="hero__name in" style="--d:5">Naufal Kaffah <span>Business Development &amp; Operations</span></h1>
-          <p class="hero__pitch in" style="--d:6">I find the opportunities, keep the operations running, and use data and AI to automate the work that slows a team down.</p>
+          <h1 class="hero__name in" style="--d:5">Naufal Kaffah <span data-i18n="hero.role">Business Development &amp; Operations</span></h1>
+          <p class="hero__pitch in" style="--d:6" data-i18n="hero.pitch">I find the opportunities, keep the operations running, and use data and AI to automate the work that slows a team down.</p>
 
           <div class="hero__cta in" style="--d:7">
-            <a class="btn btn--primary btn--lg" href="#journey">See my journey</a>
+            <a class="btn btn--primary btn--lg" href="#journey" data-i18n="hero.cta">See my journey</a>
             <a class="btn btn--ghost btn--lg" href="assets/cv.pdf" download="Naufal_Kaffah_CV.pdf">
               <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>
-              Download CV
+              <span data-i18n="cv.download">Download CV</span>
             </a>
           </div>
         </div>
@@ -111,16 +130,16 @@
               <span class="portrait__ring"></span>
               <span class="portrait__mono">NK</span>
             </div>
-            <img class="portrait__img" src="assets/img/profile.png" alt="Portrait of Naufal Kaffah" width="520" height="792" fetchpriority="high" onerror="this.closest('.portrait').classList.add('portrait--empty');this.remove();">
-            <span class="portrait__tag portrait__tag--1" data-depth="18" aria-hidden="true"><strong>5+</strong> years of experience</span>
-            <span class="portrait__tag portrait__tag--2" data-depth="-14" aria-hidden="true"><span class="status-dot"></span> Builds AI agents</span>
+            <img class="portrait__img" src="assets/img/profile.png" alt="Portrait of Naufal Kaffah" data-i18n-attr="alt:hero.portrait" width="520" height="792" fetchpriority="high" onerror="this.closest('.portrait').classList.add('portrait--empty');this.remove();">
+            <span class="portrait__tag portrait__tag--1" data-depth="18" aria-hidden="true" data-i18n="hero.tag1"><strong>5+</strong> years of experience</span>
+            <span class="portrait__tag portrait__tag--2" data-depth="-14" aria-hidden="true" data-i18n="hero.tag2"><span class="status-dot"></span> Builds AI agents</span>
             <span class="portrait__tag portrait__tag--3" data-depth="10" aria-hidden="true">Cikarang, Indonesia</span>
           </div>
         </div>
       </div>
 
       <a class="hero__scroll" href="#about">
-        <span>Scroll</span>
+        <span data-i18n="hero.scroll">Scroll</span>
         <span class="hero__scroll-line" aria-hidden="true"></span>
       </a>
     </section>
@@ -130,23 +149,23 @@
       <div class="statement__pin">
         <div class="statement__sticky">
           <div class="container">
-            <h2 class="eyebrow" id="about-title">About</h2>
-            <p class="statement__text" data-words>I’m Naufal — a Bachelor of Management graduate who spent four years teaching, then worked across sales, quality control and business development. Today I run marketing administration at PT Citra Karsa Dinamika and build Claude Code agents that take over repetitive work. I grow the business, keep it running, and automate what slows it down.</p>
+            <h2 class="eyebrow" id="about-title" data-i18n="about.eyebrow">About</h2>
+            <p class="statement__text" data-words data-i18n="about.text">I’m Naufal — a Bachelor of Management graduate who spent four years teaching, then worked across sales, quality control and business development. Today I run marketing administration at PT Citra Karsa Dinamika and build Claude Code agents that take over repetitive work. I grow the business, keep it running, and automate what slows it down.</p>
           </div>
         </div>
       </div>
       <div class="container">
           <!-- Angka sorotan: ganti sesuai kebutuhan. data-count="projects" dihitung otomatis dari projects.js -->
-          <ul class="stats reveal" aria-label="Highlights">
-            <li class="stat"><span class="stat__value" data-countup>5+</span><span class="stat__label">Years of work experience</span></li>
-            <li class="stat"><span class="stat__value" data-countup>5</span><span class="stat__label">Different roles</span></li>
-            <li class="stat"><span class="stat__value" data-countup data-count="projects">5</span><span class="stat__label">Portfolio projects</span></li>
-            <li class="stat"><span class="stat__value" data-countup>5</span><span class="stat__label">Certifications</span></li>
+          <ul class="stats reveal" aria-label="Highlights" data-i18n-attr="aria-label:stats.label">
+            <li class="stat"><span class="stat__value" data-countup>5+</span><span class="stat__label" data-i18n="stats.years">Years of work experience</span></li>
+            <li class="stat"><span class="stat__value" data-countup>5</span><span class="stat__label" data-i18n="stats.roles">Different roles</span></li>
+            <li class="stat"><span class="stat__value" data-countup data-count="projects">5</span><span class="stat__label" data-i18n="stats.projects">Portfolio projects</span></li>
+            <li class="stat"><span class="stat__value" data-countup>5</span><span class="stat__label" data-i18n="stats.certs">Certifications</span></li>
           </ul>
 
           <!-- Logo tempat kerja & belajar. File ada di assets/img/orgs/ -->
           <div class="orgs">
-            <p class="orgs__label reveal">Where I’ve worked &amp; studied</p>
+            <p class="orgs__label reveal" data-i18n="orgs.label">Where I’ve worked &amp; studied</p>
             <ul class="orgs__grid">
               <li class="reveal" style="--d:0"><span class="logo-tile logo-tile--lg"><img src="assets/img/orgs/citra-karsa.png" alt="PT Citra Karsa Dinamika" width="320" height="163" loading="lazy"></span></li>
               <li class="reveal" style="--d:1"><span class="logo-tile logo-tile--lg"><img src="assets/img/orgs/tempat-belajar.png" alt="Tempat Belajar" width="302" height="320" loading="lazy"></span></li>
@@ -164,9 +183,9 @@
     <section class="section journey" id="journey" aria-labelledby="journey-title">
       <div class="container">
         <header class="section__head reveal">
-          <p class="eyebrow">Journey</p>
-          <h2 class="big-title" id="journey-title">From classroom<br>to business.</h2>
-          <p class="lead">Five roles, one direction. Every stop added a skill I still use today.</p>
+          <p class="eyebrow" data-i18n="journey.eyebrow">Journey</p>
+          <h2 class="big-title" id="journey-title" data-i18n="journey.title">From classroom<br>to business.</h2>
+          <p class="lead" data-i18n="journey.lead">Five roles, one direction. Every stop added a skill I still use today.</p>
         </header>
 
         <div class="journey__map">
@@ -181,12 +200,12 @@
             <li class="stop">
               <span class="stop__node" aria-hidden="true"><span>2021</span></span>
               <article class="stop__card">
-                <div class="stop__logos"><span class="logo-tile"><img src="assets/img/orgs/sari-roti.png" alt="Sari Roti (PT Nippon Indosari Corpindo) logo" width="320" height="153" loading="lazy"></span></div>
+                <div class="stop__logos"><span class="logo-tile"><img src="assets/img/orgs/sari-roti.png" alt="Sari Roti (PT Nippon Indosari Corpindo) logo" data-i18n-attr="alt:j1.logo" width="320" height="153" loading="lazy"></span></div>
                 <p class="stop__date">Feb 2021 – Mar 2021</p>
                 <h3 class="stop__role">Sales Staff</h3>
                 <p class="stop__org">PT Nippon Indosari Corpindo</p>
-                <p class="stop__text">Met daily sales targets, kept retail products available and coordinated with customers and distribution.</p>
-                <p class="stop__carry"><span>Carried forward</span> Targets · Customers · Distribution</p>
+                <p class="stop__text" data-i18n="j1.text">Met daily sales targets, kept retail products available and coordinated with customers and distribution.</p>
+                <p class="stop__carry" data-i18n="j1.carry"><span>Carried forward</span> Targets · Customers · Distribution</p>
               </article>
             </li>
 
@@ -194,76 +213,76 @@
               <span class="stop__node" aria-hidden="true"><span>2021</span></span>
               <article class="stop__card">
                 <div class="stop__logos">
-                  <span class="logo-tile"><img src="assets/img/orgs/al-azhar.png" alt="Yayasan Al-Azhar logo" width="320" height="320" loading="lazy"></span>
-                  <span class="logo-tile"><img src="assets/img/orgs/al-islamiyah.png" alt="Perguruan Al Islamiyah Jakarta logo" width="320" height="318" loading="lazy"></span>
+                  <span class="logo-tile"><img src="assets/img/orgs/al-azhar.png" alt="Yayasan Al-Azhar logo" data-i18n-attr="alt:j2.logo1" width="320" height="320" loading="lazy"></span>
+                  <span class="logo-tile"><img src="assets/img/orgs/al-islamiyah.png" alt="Perguruan Al Islamiyah Jakarta logo" data-i18n-attr="alt:j2.logo2" width="320" height="318" loading="lazy"></span>
                 </div>
                 <p class="stop__date">Jul 2021 – Jun 2025</p>
-                <h3 class="stop__role">Teacher</h3>
+                <h3 class="stop__role" data-i18n="j2.role">Teacher</h3>
                 <p class="stop__org">Yayasan Perguruan Islam Al-Azhar 5 Kemandoran · Madrasah Al Islamiyah 242 Jakarta</p>
-                <p class="stop__text">Planned lessons and learning programs, analyzed learning outcomes to improve teaching, and prepared administrative reports.</p>
-                <p class="stop__carry"><span>Carried forward</span> Explaining · Planning · Reporting</p>
+                <p class="stop__text" data-i18n="j2.text">Planned lessons and learning programs, analyzed learning outcomes to improve teaching, and prepared administrative reports.</p>
+                <p class="stop__carry" data-i18n="j2.carry"><span>Carried forward</span> Explaining · Planning · Reporting</p>
               </article>
             </li>
 
             <li class="stop stop--branch">
               <span class="stop__node" aria-hidden="true"><span>2022</span></span>
               <article class="stop__card">
-                <div class="stop__logos"><span class="logo-tile"><img src="assets/img/orgs/universitas-terbuka.png" alt="Universitas Terbuka logo" width="320" height="259" loading="lazy"></span></div>
-                <p class="stop__date">Aug 2022 – Aug 2026 · Parallel track</p>
-                <h3 class="stop__role">Bachelor of Management</h3>
-                <p class="stop__org">Faculty of Economics and Business, Universitas Terbuka</p>
-                <p class="stop__text">Studied while working. GPA 3.18 / 4.00. Medical Division Member, Mapala Universitas Terbuka.</p>
-                <p class="stop__carry"><span>Carried forward</span> Management · Accounting · Discipline</p>
+                <div class="stop__logos"><span class="logo-tile"><img src="assets/img/orgs/universitas-terbuka.png" alt="Universitas Terbuka logo" data-i18n-attr="alt:j3.logo" width="320" height="259" loading="lazy"></span></div>
+                <p class="stop__date" data-i18n="j3.date">Aug 2022 – Aug 2026 · Parallel track</p>
+                <h3 class="stop__role" data-i18n="j3.role">Bachelor of Management</h3>
+                <p class="stop__org" data-i18n="j3.org">Faculty of Economics and Business, Universitas Terbuka</p>
+                <p class="stop__text" data-i18n="j3.text">Studied while working. GPA 3.18 / 4.00. Medical Division Member, Mapala Universitas Terbuka.</p>
+                <p class="stop__carry" data-i18n="j3.carry"><span>Carried forward</span> Management · Accounting · Discipline</p>
               </article>
             </li>
 
             <li class="stop">
               <span class="stop__node" aria-hidden="true"><span>2025</span></span>
               <article class="stop__card">
-                <div class="stop__logos"><span class="logo-tile"><img src="assets/img/orgs/starion.png" alt="Starion (PT Starion Wooin) logo" width="320" height="147" loading="lazy"></span></div>
-                <p class="stop__date">Nov 2025 – Dec 2025</p>
+                <div class="stop__logos"><span class="logo-tile"><img src="assets/img/orgs/starion.png" alt="Starion (PT Starion Wooin) logo" data-i18n-attr="alt:j4.logo" width="320" height="147" loading="lazy"></span></div>
+                <p class="stop__date" data-i18n="j4.date">Nov 2025 – Dec 2025</p>
                 <h3 class="stop__role">Quality Control</h3>
                 <p class="stop__org">PT Starion Wooin</p>
-                <p class="stop__text">Monitored production and final products against SOPs, recorded non-conformities and coordinated corrective action.</p>
-                <p class="stop__carry"><span>Carried forward</span> SOPs · Inspection · Follow-up</p>
+                <p class="stop__text" data-i18n="j4.text">Monitored production and final products against SOPs, recorded non-conformities and coordinated corrective action.</p>
+                <p class="stop__carry" data-i18n="j4.carry"><span>Carried forward</span> SOPs · Inspection · Follow-up</p>
               </article>
             </li>
 
             <li class="stop">
               <span class="stop__node" aria-hidden="true"><span>2026</span></span>
               <article class="stop__card">
-                <div class="stop__logos"><span class="logo-tile"><img src="assets/img/orgs/tempat-belajar.png" alt="Tempat Belajar logo" width="302" height="320" loading="lazy"></span></div>
-                <p class="stop__date">Feb 2026 – May 2026</p>
+                <div class="stop__logos"><span class="logo-tile"><img src="assets/img/orgs/tempat-belajar.png" alt="Tempat Belajar logo" data-i18n-attr="alt:j5.logo" width="302" height="320" loading="lazy"></span></div>
+                <p class="stop__date" data-i18n="j5.date">Feb 2026 – May 2026</p>
                 <h3 class="stop__role">Business Development Officer</h3>
-                <p class="stop__org">Tempat Belajar · Remote apprenticeship</p>
-                <p class="stop__text">Researched market opportunities, built prospect lists and partnership strategies, and prepared persuasive presentations.</p>
-                <p class="stop__carry"><span>Carried forward</span> Research · Prospecting · Pitching</p>
+                <p class="stop__org" data-i18n="j5.org">Tempat Belajar · Remote apprenticeship</p>
+                <p class="stop__text" data-i18n="j5.text">Researched market opportunities, built prospect lists and partnership strategies, and prepared persuasive presentations.</p>
+                <p class="stop__carry" data-i18n="j5.carry"><span>Carried forward</span> Research · Prospecting · Pitching</p>
               </article>
             </li>
 
             <li class="stop stop--now">
-              <span class="stop__node" aria-hidden="true"><span>Now</span></span>
+              <span class="stop__node" aria-hidden="true"><span data-i18n="j6.node">Now</span></span>
               <article class="stop__card">
-                <div class="stop__logos"><span class="logo-tile"><img src="assets/img/orgs/citra-karsa.png" alt="PT Citra Karsa Dinamika logo" width="320" height="163" loading="lazy"></span></div>
-                <p class="stop__date">Jul 2026 – Present</p>
+                <div class="stop__logos"><span class="logo-tile"><img src="assets/img/orgs/citra-karsa.png" alt="PT Citra Karsa Dinamika logo" data-i18n-attr="alt:j6.logo" width="320" height="163" loading="lazy"></span></div>
+                <p class="stop__date" data-i18n="j6.date">Jul 2026 – Present</p>
                 <h3 class="stop__role">Marketing Administrator</h3>
                 <p class="stop__org">PT Citra Karsa Dinamika</p>
                 <ul class="stop__points">
-                  <li>Enter 200+ marketing data records every month and build data visualization dashboards.</li>
-                  <li>Archive and deliver marketing documents on schedule, keeping every file traceable.</li>
-                  <li>Coordinate administrative support for the marketing team so requests are handled quickly.</li>
+                  <li data-i18n="j6.p1">Enter 200+ marketing data records every month and build data visualization dashboards.</li>
+                  <li data-i18n="j6.p2">Archive and deliver marketing documents on schedule, keeping every file traceable.</li>
+                  <li data-i18n="j6.p3">Coordinate administrative support for the marketing team so requests are handled quickly.</li>
                 </ul>
-                <p class="stop__carry"><span>Carried forward</span> Data · Documents · Coordination</p>
+                <p class="stop__carry" data-i18n="j6.carry"><span>Carried forward</span> Data · Documents · Coordination</p>
               </article>
             </li>
 
             <li class="stop stop--next">
-              <span class="stop__node" aria-hidden="true"><span>Next</span></span>
+              <span class="stop__node" aria-hidden="true"><span data-i18n="j7.node">Next</span></span>
               <article class="stop__card">
-                <p class="stop__date">The next stop</p>
-                <h3 class="stop__role">Business Development, on your team.</h3>
-                <p class="stop__text">Bringing all of the above to a Business Development or staff role where I can grow the business and keep it running.</p>
-                <a class="btn btn--primary" href="#contact">Let’s talk</a>
+                <p class="stop__date" data-i18n="j7.date">The next stop</p>
+                <h3 class="stop__role" data-i18n="j7.role">Business Development, on your team.</h3>
+                <p class="stop__text" data-i18n="j7.text">Bringing all of the above to a Business Development or staff role where I can grow the business and keep it running.</p>
+                <a class="btn btn--primary" href="#contact" data-i18n="j7.cta">Let’s talk</a>
               </article>
             </li>
           </ol>
@@ -275,15 +294,15 @@
     <section class="section lab" id="projects" aria-labelledby="projects-title">
       <div class="container">
         <header class="section__head reveal">
-          <p class="eyebrow">The lab</p>
-          <h2 class="big-title" id="projects-title">AI, data &amp;<br>market work.</h2>
-          <p class="lead">Projects where I test how far AI and automation can take everyday business work. Select a card for the full story.</p>
+          <p class="eyebrow" data-i18n="lab.eyebrow">The lab</p>
+          <h2 class="big-title" id="projects-title" data-i18n="lab.title">AI, data &amp;<br>market work.</h2>
+          <p class="lead" data-i18n="lab.lead">Projects where I test how far AI and automation can take everyday business work. Select a card for the full story.</p>
         </header>
 
         <!-- Tombol filter dibuat otomatis dari kategori di projects.js -->
-        <div class="filters reveal" role="group" aria-label="Filter projects by category"></div>
+        <div class="filters reveal" role="group" aria-label="Filter projects by category" data-i18n-attr="aria-label:lab.filters"></div>
         <ul class="stack" aria-live="polite"></ul>
-        <noscript><p class="lead">Please enable JavaScript to view the projects.</p></noscript>
+        <noscript><p class="lead">Please enable JavaScript to view the projects. / Aktifkan JavaScript untuk melihat proyek.</p></noscript>
       </div>
     </section>
 
@@ -291,55 +310,55 @@
     <section class="section skills" id="skills" aria-labelledby="skills-title">
       <div class="container">
         <header class="section__head reveal">
-          <p class="eyebrow">Skills</p>
-          <h2 class="big-title" id="skills-title">What I do,<br>in three verbs.</h2>
+          <p class="eyebrow" data-i18n="skills.eyebrow">Skills</p>
+          <h2 class="big-title" id="skills-title" data-i18n="skills.title">What I do,<br>in three verbs.</h2>
         </header>
 
         <div class="verbs">
           <article class="verb reveal" style="--d:0">
             <p class="verb__num">01</p>
-            <h3 class="verb__word">Grow</h3>
+            <h3 class="verb__word" data-i18n="verb1.word">Grow</h3>
             <p class="verb__sub">Business Development</p>
             <ul class="verb__list">
-              <li>Market research</li>
-              <li>Partner &amp; prospect mapping</li>
-              <li>Presentations &amp; proposals</li>
-              <li>Sales &amp; CRM</li>
-              <li>Negotiation &amp; public speaking</li>
+              <li data-i18n="verb1.i1">Market research</li>
+              <li data-i18n="verb1.i2">Partner &amp; prospect mapping</li>
+              <li data-i18n="verb1.i3">Presentations &amp; proposals</li>
+              <li data-i18n="verb1.i4">Sales &amp; CRM</li>
+              <li data-i18n="verb1.i5">Negotiation &amp; public speaking</li>
             </ul>
           </article>
           <article class="verb reveal" style="--d:1">
             <p class="verb__num">02</p>
-            <h3 class="verb__word">Run</h3>
-            <p class="verb__sub">Operations &amp; Admin</p>
+            <h3 class="verb__word" data-i18n="verb2.word">Run</h3>
+            <p class="verb__sub" data-i18n="verb2.sub">Operations &amp; Admin</p>
             <ul class="verb__list">
-              <li>Data entry &amp; management</li>
-              <li>Document archiving &amp; delivery</li>
-              <li>Cross-team coordination</li>
-              <li>Reporting</li>
-              <li>Inventory administration &amp; QC</li>
+              <li data-i18n="verb2.i1">Data entry &amp; management</li>
+              <li data-i18n="verb2.i2">Document archiving &amp; delivery</li>
+              <li data-i18n="verb2.i3">Cross-team coordination</li>
+              <li data-i18n="verb2.i4">Reporting</li>
+              <li data-i18n="verb2.i5">Inventory administration &amp; QC</li>
             </ul>
           </article>
           <article class="verb verb--accent reveal" style="--d:2">
             <p class="verb__num">03</p>
-            <h3 class="verb__word">Automate</h3>
-            <p class="verb__sub">Tools &amp; Tech</p>
+            <h3 class="verb__word" data-i18n="verb3.word">Automate</h3>
+            <p class="verb__sub" data-i18n="verb3.sub">Tools &amp; Tech</p>
             <ul class="verb__list">
               <li>Excel / Google Sheets (PivotTables, VLOOKUP, INDEX-MATCH)</li>
               <li>Claude &amp; Claude Code</li>
-              <li>AI workflow automation</li>
+              <li data-i18n="verb3.i3">AI workflow automation</li>
               <li>Canva</li>
-              <li>Microsoft Office &amp; data visualization</li>
+              <li data-i18n="verb3.i5">Microsoft Office &amp; data visualization</li>
             </ul>
           </article>
         </div>
 
         <!-- Aplikasi yang dikuasai. Logo ada di assets/img/tools/ (SVG). Tambah aplikasi: salin satu <li class="app">. -->
         <div class="apps">
-          <h3 class="sub-title reveal">Apps I work with</h3>
+          <h3 class="sub-title reveal" data-i18n="apps.title">Apps I work with</h3>
 
           <div class="apps__group">
-            <p class="apps__label reveal">Office &amp; productivity</p>
+            <p class="apps__label reveal" data-i18n="apps.office">Office &amp; productivity</p>
             <ul class="apps__grid">
               <li class="app reveal" style="--d:0"><span class="app__icon"><img src="assets/img/tools/word.svg" alt="" width="40" height="40" loading="lazy"></span><span class="app__name">Microsoft Word</span></li>
               <li class="app reveal" style="--d:1"><span class="app__icon"><img src="assets/img/tools/excel.svg" alt="" width="40" height="40" loading="lazy"></span><span class="app__name">Microsoft Excel</span></li>
@@ -350,7 +369,7 @@
           </div>
 
           <div class="apps__group">
-            <p class="apps__label reveal">Design &amp; video</p>
+            <p class="apps__label reveal" data-i18n="apps.design">Design &amp; video</p>
             <ul class="apps__grid">
               <li class="app reveal" style="--d:0"><span class="app__icon"><img src="assets/img/tools/canva.png" alt="" width="40" height="40" loading="lazy"></span><span class="app__name">Canva</span></li>
               <li class="app reveal" style="--d:1"><span class="app__icon"><img src="assets/img/tools/capcut.svg" alt="" width="40" height="40" loading="lazy"></span><span class="app__name">CapCut</span></li>
@@ -359,7 +378,7 @@
           </div>
 
           <div class="apps__group">
-            <p class="apps__label reveal">AI assistants &amp; agents</p>
+            <p class="apps__label reveal" data-i18n="apps.ai">AI assistants &amp; agents</p>
             <ul class="apps__grid">
               <li class="app reveal" style="--d:0"><span class="app__icon"><img src="assets/img/tools/claude.svg" alt="" width="40" height="40" loading="lazy"></span><span class="app__name">Claude</span></li>
               <li class="app reveal" style="--d:1"><span class="app__icon"><img src="assets/img/tools/claude-code.svg" alt="" width="40" height="40" loading="lazy"></span><span class="app__name">Claude Code</span></li>
@@ -372,7 +391,7 @@
           </div>
 
           <div class="apps__group">
-            <p class="apps__label reveal">Collaboration</p>
+            <p class="apps__label reveal" data-i18n="apps.collab">Collaboration</p>
             <ul class="apps__grid">
               <li class="app reveal" style="--d:0"><span class="app__icon"><img src="assets/img/tools/github.svg" alt="" width="40" height="40" loading="lazy"></span><span class="app__name">GitHub</span></li>
               <li class="app reveal" style="--d:1"><span class="app__icon"><img src="assets/img/tools/slack.svg" alt="" width="40" height="40" loading="lazy"></span><span class="app__name">Slack</span></li>
@@ -390,56 +409,56 @@
         </div>
         <div class="marquee__row marquee__row--outline" data-speed="-1">
           <div class="marquee__track">
-            <span>Market Research</span><i>✦</i><span>Data Visualization</span><i>✦</i><span>AI Automation</span><i>✦</i><span>Microsoft Office</span><i>✦</i>
+            <span data-i18n="marquee.research">Market Research</span><i>✦</i><span data-i18n="marquee.dataviz">Data Visualization</span><i>✦</i><span data-i18n="marquee.automation">AI Automation</span><i>✦</i><span>Microsoft Office</span><i>✦</i>
           </div>
         </div>
       </div>
 
       <div class="container">
-        <h3 class="sub-title reveal">Certifications &amp; training</h3>
+        <h3 class="sub-title reveal" data-i18n="certs.title">Certifications &amp; training</h3>
         <!-- Tambah sertifikat: salin satu <li class="cert"> ... </li> -->
         <ul class="certs">
           <li class="cert reveal">
-            <span class="cert__title">Excel Accounting — Grade A</span>
+            <span class="cert__title" data-i18n="cert1.title">Excel Accounting — Grade A</span>
             <span class="cert__issuer">DSAREA</span>
             <span class="cert__date">Jun–Jul 2026</span>
             <span class="cert__id">No. 0025/DSA/EC/072026</span>
           </li>
           <li class="cert reveal">
-            <span class="cert__title">Warehouse Administration &amp; Inventory Operations</span>
+            <span class="cert__title" data-i18n="cert2.title">Warehouse Administration &amp; Inventory Operations</span>
             <span class="cert__issuer">Kelas.com</span>
             <span class="cert__date">Jul 2026</span>
             <span class="cert__id">ID CERT-E1207925</span>
           </li>
           <li class="cert reveal">
-            <span class="cert__title">Business Development Bootcamp</span>
+            <span class="cert__title" data-i18n="cert3.title">Business Development Bootcamp</span>
             <span class="cert__issuer">Tempat Belajar</span>
-            <span class="cert__date">Feb–May 2026</span>
-            <span class="cert__id">8-week program</span>
+            <span class="cert__date" data-i18n="cert3.date">Feb–May 2026</span>
+            <span class="cert__id" data-i18n="cert3.id">8-week program</span>
           </li>
           <li class="cert reveal">
-            <span class="cert__title">Public Speaking Webinar</span>
+            <span class="cert__title" data-i18n="cert4.title">Public Speaking Webinar</span>
             <span class="cert__issuer">Kamilatih</span>
             <span class="cert__date">Apr 2026</span>
             <span class="cert__id">“Rahasia Jago Bicara” Batch 19</span>
           </li>
           <li class="cert reveal">
-            <span class="cert__title">English Proficiency Program — Grade B</span>
+            <span class="cert__title" data-i18n="cert5.title">English Proficiency Program — Grade B</span>
             <span class="cert__issuer">Golden English, Kampung Inggris Plus</span>
-            <span class="cert__date">Oct 2025</span>
-            <span class="cert__id">180 sessions</span>
+            <span class="cert__date" data-i18n="cert5.date">Oct 2025</span>
+            <span class="cert__id" data-i18n="cert5.id">180 sessions</span>
           </li>
         </ul>
-        <p class="languages reveal"><strong>Languages</strong> Indonesian (native) · English (intermediate) · Arabic (intermediate)</p>
+        <p class="languages reveal" data-i18n="languages"><strong>Languages</strong> Indonesian (native) · English (intermediate) · Arabic (intermediate)</p>
       </div>
     </section>
 
     <!-- ============ CONTACT ============ -->
     <section class="contact" id="contact" aria-labelledby="contact-title">
       <div class="container">
-        <p class="eyebrow">Contact</p>
-        <h2 class="contact__title reveal" id="contact-title">Let’s grow<br>something.</h2>
-        <p class="lead reveal">Open to Business Development and staff roles.</p>
+        <p class="eyebrow" data-i18n="contact.eyebrow">Contact</p>
+        <h2 class="contact__title reveal" id="contact-title" data-i18n="contact.title">Let’s grow<br>something.</h2>
+        <p class="lead reveal" data-i18n="contact.lead">Open to Business Development and staff roles.</p>
 
         <ul class="contact__rows">
           <li class="reveal" style="--d:0">
@@ -467,7 +486,7 @@
 
         <a class="btn btn--light btn--lg reveal" href="assets/cv.pdf" download="Naufal_Kaffah_CV.pdf">
           <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>
-          Download CV
+          <span data-i18n="cv.download">Download CV</span>
         </a>
       </div>
     </section>
@@ -477,22 +496,23 @@
   <footer class="site-footer">
     <div class="container site-footer__inner">
       <p>© <span data-year>2026</span> Naufal Kaffah</p>
-      <p class="site-footer__motto">Grow it. Run it. Automate it.</p>
-      <p>Built with Claude Code</p>
+      <p class="site-footer__motto" data-i18n="footer.motto">Grow it. Run it. Automate it.</p>
+      <p data-i18n="footer.built">Built with Claude Code</p>
     </div>
   </footer>
 
   <!-- ============ PROJECT MODAL ============ -->
   <dialog class="modal" id="project-modal" aria-labelledby="modal-title">
     <div class="modal__inner">
-      <button class="icon-btn modal__close" type="button" aria-label="Close project details">
+      <button class="icon-btn modal__close" type="button" aria-label="Close project details" data-i18n-attr="aria-label:modal.close">
         <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
       </button>
       <div class="modal__content"></div>
     </div>
   </dialog>
 
-  <script src="js/projects.js?v=20261025a"></script>
-  <script src="js/main.js?v=20261025a"></script>
+  <script src="js/i18n.js?v=20261025b"></script>
+  <script src="js/projects.js?v=20261025b"></script>
+  <script src="js/main.js?v=20261025b"></script>
 </body>
 </html>

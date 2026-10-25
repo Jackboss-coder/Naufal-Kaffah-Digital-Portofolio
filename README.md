@@ -8,8 +8,9 @@ Bisa dibuka langsung dengan klik dua kali `index.html`, dan siap di-hosting grat
 ```
 /index.html            ← seluruh isi halaman (Hero, About, Journey, Skills, Certifications, Contact)
 /css/style.css         ← tampilan; warna ada di bagian paling atas (:root)
-/js/main.js            ← fitur interaktif (mode gelap, menu HP, filter, modal, animasi scroll, jalur karier)
-/js/projects.js        ← DATA PROYEK — file yang diedit untuk menambah karya
+/js/main.js            ← fitur interaktif (mode gelap, ganti bahasa, menu HP, filter, modal, animasi scroll, jalur karier)
+/js/projects.js        ← DATA PROYEK — file yang diedit untuk menambah karya (teks dalam dua bahasa)
+/js/i18n.js            ← terjemahan Bahasa Indonesia untuk teks di index.html dan label tombol
 /assets/img/           ← foto profil, favicon, gambar Open Graph
 /assets/img/projects/  ← gambar proyek
 /assets/cv.pdf         ← CV yang diunduh pengunjung
@@ -21,7 +22,7 @@ Cari teks berikut (Ctrl+F) lalu ganti dengan data asli:
 
 | Placeholder | Lokasi |
 |---|---|
-| `[YOUR METRIC]` (1×) | `js/projects.js`, kolom `result` |
+| `[YOUR METRIC]` (2×: versi `en` dan `id`) | `js/projects.js`, kolom `result` proyek Canva Content Agents |
 
 Alamat situs: <https://naufal-kaffah-digital-portofolio.nk02.workers.dev> (Cloudflare Workers, deploy otomatis dari branch `main`).
 Alamat ini dipakai di 4 tag `<head>` `index.html` (canonical, og:url, og:image, twitter:image); ganti di sana jika alamatnya berubah.
@@ -53,19 +54,19 @@ Buka `js/projects.js`. Setiap proyek adalah satu blok `{ ... }`. Salin blok tera
 ```js
   {
     id: "sales-dashboard",                       // unik, tanpa spasi
-    title: "Sales Performance Dashboard",
-    category: "Data & Analysis",                 // "AI & Automation" | "Data & Analysis" | "Content Design"
+    title: { en: "Sales Performance Dashboard", id: "Dashboard Kinerja Penjualan" },
+    category: "Data & Analysis",                 // "AI & Automation" | "Data & Analysis" | "Content Design" (selalu bahasa Inggris)
     image: "assets/img/projects/sales-dashboard.jpg",
-    imageAlt: "Dashboard showing monthly sales by region",
-    summary: "Two sentences for the card: problem, what you did, result.",
-    problem: "The challenge, shown in the modal.",
-    approach: [
-      "Step one you took.",
-      "Step two you took."
-    ],
-    result: "The outcome, with numbers where possible.",
-    tools: ["Google Sheets", "Looker Studio"],
-    links: [{ label: "View dashboard", url: "https://..." }]   // opsional, boleh dihapus
+    imageAlt: { en: "Dashboard showing monthly sales by region", id: "Dashboard penjualan bulanan per wilayah" },
+    summary: { en: "Two sentences for the card: problem, what you did, result.", id: "Dua kalimat untuk kartu: masalah, yang dilakukan, hasil." },
+    problem: { en: "The challenge, shown in the modal.", id: "Tantangannya, tampil di modal." },
+    approach: {
+      en: ["Step one you took.", "Step two you took."],
+      id: ["Langkah pertama.", "Langkah kedua."]
+    },
+    result: { en: "The outcome, with numbers where possible.", id: "Hasilnya, dengan angka bila ada." },
+    tools: ["Google Sheets", "Looker Studio", { en: "Test design", id: "Desain pengujian" }],
+    links: [{ label: { en: "View dashboard", id: "Lihat dashboard" }, url: "https://..." }]   // opsional, boleh dihapus
   }
 ```
 
@@ -73,12 +74,61 @@ Tips:
 - Gambar proyek: rasio 16:10 (misalnya 1200×750 px), JPG/WebP, di bawah 250 KB. Simpan di `assets/img/projects/`.
   Jika gambar tidak ditemukan, kartu menampilkan ikon placeholder (situs tidak rusak).
 - Kategori baru (misalnya `"Business Development"`) otomatis muncul sebagai tombol filter.
-- Tulis dalam Bahasa Inggris, pakai kata kerja aktif dan angka hasil bila ada.
+- Tulis versi `en` dan `id`, pakai kata kerja aktif dan angka hasil bila ada. Lihat bagian **Dua bahasa** di bawah.
 - Periksa tanda koma dan tanda kutip. Jika galeri kosong setelah diedit, biasanya ada koma atau kutip yang hilang.
+
+## Dua bahasa (English / Indonesia)
+
+Situs tampil dalam bahasa Inggris atau Indonesia. Pengunjung menggantinya lewat tombol **EN / ID** di header (di samping tombol mode gelap), tanpa memuat ulang halaman.
+
+- **Bahasa awal**: pilihan yang tersimpan; jika belum ada, bahasa browser (Indonesia → `id`, Inggris → `en`); selain itu bahasa Inggris.
+- **Pilihan diingat** di `localStorage` (kunci `lang`), sama seperti mode gelap (`theme`).
+- Atribut `lang` di `<html>`, judul tab, dan meta description ikut berganti.
+- Tag Open Graph (`og:*`, pratinjau tautan WhatsApp/LinkedIn) tetap berbahasa Inggris, karena dibaca tanpa JavaScript.
+- Teks berbahasa Inggris adalah sumbernya. Bila terjemahan Indonesia suatu teks tidak ada, versi Inggrisnya yang tampil.
+
+### Teks di `index.html`
+
+Teks Inggris ditulis langsung di `index.html`. Elemen yang diterjemahkan punya atribut:
+- `data-i18n="kunci"` → isi elemen (boleh berisi `<br>`, `<strong>`, `&amp;`)
+- `data-i18n-attr="atribut:kunci"` → isi atribut, mis. `alt:hero.portrait`, `aria-label:nav.label`, `content:meta.description`
+
+Terjemahan Indonesianya ada di `js/i18n.js`, bagian `page.id`, dengan kunci yang sama.
+
+**Menyunting** teks: ubah versi Inggris di `index.html`, lalu versi Indonesia di `js/i18n.js` (cari kuncinya dengan Ctrl+F).
+
+**Menambah** teks baru, contoh:
+
+```html
+<p class="lead" data-i18n="contact.note">Usually replies within a day.</p>
+```
+
+```js
+// js/i18n.js → page.id
+"contact.note": "Biasanya membalas dalam sehari.",
+```
+
+Teks yang sama di kedua bahasa (nama orang, perusahaan, aplikasi, tanggal seperti "Jul 2026") tidak perlu kunci.
+
+### Label tombol dan modal (`js/main.js`)
+
+Label seperti "Read the story", "The challenge", "What I did", nama kategori filter, dan aria-label tombol ada di `js/i18n.js`, bagian `ui`. Isi `ui.en` dan `ui.id` dengan kunci yang sama.
+Kategori baru di `projects.js` cukup diberi label dengan kunci `"cat.<nama kategori>"`, mis. `"cat.Business Development": "Business Development"`.
+
+### Teks kartu proyek (`js/projects.js`)
+
+Setiap kolom teks boleh berupa teks biasa (tampil sama di kedua bahasa) atau `{ en: "...", id: "..." }`.
+Untuk daftar langkah (`approach`), isi `en` dan `id` dengan daftar yang urutan dan jumlahnya sama. Contoh lengkap ada di bagian **Menambah proyek baru**.
+Ini berlaku juga untuk `galleryTitle`, `title`/`note` grup galeri, `alt` gambar galeri, `label` video, dan tag `tools`.
+
+### Setelah mengubah file
+
+Naikkan penanda versi `?v=...` di `index.html` (CSS dan ketiga file JS) agar pengunjung tidak mendapat campuran file lama dan baru.
 
 ## Menambah sertifikat
 
 Di `index.html`, bagian `CERTIFICATIONS`, salin satu blok `<li class="cert reveal"> ... </li>` lalu ganti judul, penerbit, tanggal, dan nomor sertifikat.
+Beri kunci `data-i18n` baru (mis. `cert6.title`) dan tambahkan terjemahannya di `js/i18n.js` (lihat **Dua bahasa**).
 
 ## Konsep & animasi scroll
 

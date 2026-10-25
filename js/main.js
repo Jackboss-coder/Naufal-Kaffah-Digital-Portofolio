@@ -25,6 +25,71 @@
   var ARROW_ICON =
     '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
 
+  /* ---------- Language: English is the source, Indonesian comes from js/i18n.js ---------- */
+  var I18N = window.I18N || {};
+  var UI = I18N.ui || {};
+  var PAGE_ID = (I18N.page && I18N.page.id) || {};
+  var lang = root.getAttribute("lang") === "id" ? "id" : "en";
+  var langBtn = document.querySelector(".lang-toggle");
+  var pageEn = {}; // English text of index.html, keyed by data-i18n / data-i18n-attr
+
+  // Label used by this script; falls back to English, then to the given fallback or the key
+  function t(key, fallback) {
+    var own = UI[lang] || {}, en = UI.en || {};
+    if (own[key] != null) return own[key];
+    if (en[key] != null) return en[key];
+    return fallback != null ? fallback : key;
+  }
+
+  // Project fields are plain values or { en, id }
+  function tr(value) {
+    if (value && typeof value === "object" && !Array.isArray(value) && "en" in value) {
+      return value[lang] != null && value[lang] !== "" ? value[lang] : value.en;
+    }
+    return value;
+  }
+
+  function attrPairs(node) {
+    return node.getAttribute("data-i18n-attr").split(";").map(function (pair) {
+      var i = pair.indexOf(":");
+      return { attr: pair.slice(0, i).trim(), key: pair.slice(i + 1).trim() };
+    });
+  }
+
+  // Remember the English text before anything is translated
+  document.querySelectorAll("[data-i18n]").forEach(function (node) {
+    var key = node.getAttribute("data-i18n");
+    if (!(key in pageEn)) pageEn[key] = node.tagName === "TITLE" ? node.textContent : node.innerHTML;
+  });
+  document.querySelectorAll("[data-i18n-attr]").forEach(function (node) {
+    attrPairs(node).forEach(function (p) {
+      if (!(p.key in pageEn)) pageEn[p.key] = node.getAttribute(p.attr) || "";
+    });
+  });
+
+  function pageText(key) {
+    return lang === "id" && PAGE_ID[key] != null ? PAGE_ID[key] : pageEn[key];
+  }
+
+  function translatePage() {
+    root.setAttribute("lang", lang);
+    document.querySelectorAll("[data-i18n]").forEach(function (node) {
+      var text = pageText(node.getAttribute("data-i18n"));
+      if (text == null) return;
+      if (node.tagName === "TITLE") node.textContent = text;
+      else if (node.innerHTML !== text) node.innerHTML = text;
+    });
+    document.querySelectorAll("[data-i18n-attr]").forEach(function (node) {
+      attrPairs(node).forEach(function (p) {
+        var text = pageText(p.key);
+        if (text != null) node.setAttribute(p.attr, text);
+      });
+    });
+    if (langBtn) langBtn.setAttribute("aria-label", t("lang.switch"));
+  }
+
+  translatePage();
+
   // Replace a broken project image with a neutral placeholder
   function imageWithFallback(src, alt) {
     var img = el("img");
@@ -37,7 +102,7 @@
     img.addEventListener("error", function () {
       var ph = el("div", "media-fallback");
       ph.setAttribute("role", "img");
-      ph.setAttribute("aria-label", alt || "Project image placeholder");
+      ph.setAttribute("aria-label", alt || t("img.placeholder"));
       ph.innerHTML = FALLBACK_ICON;
       img.replaceWith(ph);
     });
@@ -49,7 +114,7 @@
 
   function applyTheme(theme) {
     root.setAttribute("data-theme", theme);
-    if (themeBtn) themeBtn.setAttribute("aria-label", theme === "dark" ? "Switch to light mode" : "Switch to dark mode");
+    if (themeBtn) themeBtn.setAttribute("aria-label", t(theme === "dark" ? "theme.toLight" : "theme.toDark"));
   }
 
   applyTheme(root.getAttribute("data-theme") || "light");
@@ -68,7 +133,7 @@
 
   function setMenu(open) {
     navToggle.setAttribute("aria-expanded", String(open));
-    navToggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+    navToggle.setAttribute("aria-label", t(open ? "menu.close" : "menu.open"));
     navMenu.classList.toggle("is-open", open);
   }
 
@@ -96,9 +161,12 @@
   /* ---------- About statement: wrap words so they can fill in ---------- */
   var statement = document.querySelector("[data-words]");
   var statementWords = [];
-  if (statement) {
+
+  function wrapWords() {
+    if (!statement) return;
     var words = statement.textContent.trim().split(/\s+/);
     statement.textContent = "";
+    statementWords = [];
     words.forEach(function (w, i) {
       var span = el("span", "w", w);
       statement.appendChild(span);
@@ -106,6 +174,8 @@
       statementWords.push(span);
     });
   }
+
+  wrapWords();
 
   /* ---------- Count-up numbers ---------- */
   function countUp(node) {
@@ -150,6 +220,8 @@
 
   function pad(n) { return n < 10 ? "0" + n : String(n); }
 
+  function categoryLabel(cat) { return t("cat." + cat, cat); }
+
   function renderCard(project, index) {
     var li = el("li", "stack__item");
     li.dataset.category = project.category;
@@ -157,36 +229,38 @@
     var card = el("article", "stack-card");
 
     var media = el("div", "stack-card__media");
-    media.appendChild(imageWithFallback(project.image, project.imageAlt));
+    media.appendChild(imageWithFallback(project.image, tr(project.imageAlt)));
     if (project.video) {
       var badge = el("span", "stack-card__badge");
-      badge.innerHTML = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg> Video demo';
+      badge.innerHTML = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg> ';
+      badge.appendChild(document.createTextNode(t("card.video")));
       media.appendChild(badge);
     }
     card.appendChild(media);
 
     var body = el("div", "stack-card__body");
     body.appendChild(el("p", "stack-card__index", pad(index + 1) + " / " + pad(projects.length)));
-    body.appendChild(el("p", "stack-card__cat", project.category));
+    body.appendChild(el("p", "stack-card__cat", categoryLabel(project.category)));
 
     var h3 = el("h3", "stack-card__title");
-    var open = el("button", "stack-card__open", project.title);
+    var open = el("button", "stack-card__open", tr(project.title));
     open.type = "button";
     open.setAttribute("aria-haspopup", "dialog");
     open.addEventListener("click", function () { openModal(index, open); });
     h3.appendChild(open);
     body.appendChild(h3);
 
-    body.appendChild(el("p", "stack-card__summary", project.summary));
+    body.appendChild(el("p", "stack-card__summary", tr(project.summary)));
 
     var tags = el("ul", "tags");
-    tags.setAttribute("aria-label", "Tools");
-    (project.tools || []).forEach(function (t) { tags.appendChild(el("li", "tag", t)); });
+    tags.setAttribute("aria-label", t("card.tools"));
+    (project.tools || []).forEach(function (tool) { tags.appendChild(el("li", "tag", tr(tool))); });
     body.appendChild(tags);
 
     var more = el("span", "stack-card__more");
     more.setAttribute("aria-hidden", "true");
-    more.innerHTML = "Read the story " + ARROW_ICON;
+    more.textContent = t("card.more") + " ";
+    more.insertAdjacentHTML("beforeend", ARROW_ICON);
     body.appendChild(more);
 
     // The whole card opens the modal; the title button keeps it keyboard-accessible
@@ -217,10 +291,10 @@
 
     ["All"].concat(cats).forEach(function (cat) {
       var count = cat === "All" ? projects.length : projects.filter(function (p) { return p.category === cat; }).length;
-      var btn = el("button", "filter-btn", cat);
+      var btn = el("button", "filter-btn", cat === "All" ? t("filter.all") : categoryLabel(cat));
       btn.type = "button";
       btn.dataset.filter = cat;
-      btn.setAttribute("aria-pressed", String(cat === "All"));
+      btn.setAttribute("aria-pressed", String(cat === activeFilter));
       var c = el("span", "filter-btn__count", String(count));
       c.setAttribute("aria-hidden", "true");
       btn.appendChild(c);
@@ -230,7 +304,9 @@
   }
 
   var filterTimer;
+  var activeFilter = "All";
   function applyFilter(cat) {
+    activeFilter = cat;
     filtersWrap.querySelectorAll(".filter-btn").forEach(function (b) {
       b.setAttribute("aria-pressed", String(b.dataset.filter === cat));
     });
@@ -244,15 +320,23 @@
     }, reduceMotion ? 0 : 300);
   }
 
-  if (stack && filtersWrap) {
+  // Also called after a language switch; keeps the active filter
+  function renderProjects() {
+    if (!stack || !filtersWrap) return;
+    stack.textContent = "";
+    filtersWrap.textContent = "";
+    stackItems = [];
     projects.forEach(function (p, i) {
       var li = renderCard(p, i);
+      li.hidden = !(activeFilter === "All" || p.category === activeFilter);
       stack.appendChild(li);
       stackItems.push(li);
     });
     indexStack();
     renderFilters();
   }
+
+  renderProjects();
 
   document.querySelectorAll('[data-count="projects"]').forEach(function (n) {
     n.textContent = String(projects.length);
@@ -332,16 +416,19 @@
   }
 
   /* ---------- Marquee: speed follows scroll velocity ---------- */
-  var marqueeRows = Array.prototype.slice.call(document.querySelectorAll(".marquee__row")).map(function (row) {
-    var track = row.querySelector(".marquee__track");
-    // Repeat the track until the row is at least twice the viewport width, so it can loop seamlessly
-    var copies = 1;
-    while (row.scrollWidth < window.innerWidth * 2 + track.offsetWidth && copies < 12) {
-      var clone = track.cloneNode(true);
-      row.appendChild(clone);
+  // Repeat the track until the row is at least twice the viewport width, so it can loop seamlessly
+  function fillMarquee(m) {
+    var copies = m.row.children.length;
+    while (m.row.scrollWidth < window.innerWidth * 2 + m.track.offsetWidth && copies < 12) {
+      m.row.appendChild(m.track.cloneNode(true));
       copies++;
     }
-    return { row: row, track: track, dir: Number(row.dataset.speed) || 1, x: 0 };
+  }
+
+  var marqueeRows = Array.prototype.slice.call(document.querySelectorAll(".marquee__row")).map(function (row) {
+    var m = { row: row, track: row.querySelector(".marquee__track"), dir: Number(row.dataset.speed) || 1, x: 0 };
+    fillMarquee(m);
+    return m;
   });
   var marqueeVisible = false;
   var scrollVelocity = 0;
@@ -495,47 +582,49 @@
       video.controls = true;
       video.playsInline = true;
       video.preload = "metadata";
-      video.setAttribute("aria-label", p.video.label || p.title + " video");
+      var videoLabel = tr(p.video.label) || t("modal.video").replace("{title}", tr(p.title));
+      video.setAttribute("aria-label", videoLabel);
       if (!reduceMotion) video.autoplay = true;
       // If the browser can't play it, show the still frame instead
       video.addEventListener("error", function () {
-        if (p.video.poster) video.replaceWith(imageWithFallback(p.video.poster, p.video.label || p.imageAlt));
+        if (p.video.poster) video.replaceWith(imageWithFallback(p.video.poster, videoLabel));
       });
       media.appendChild(video);
     } else {
-      media.appendChild(imageWithFallback(p.image, p.imageAlt));
+      media.appendChild(imageWithFallback(p.image, tr(p.imageAlt)));
     }
     modalContent.appendChild(media);
 
     if (p.video && p.video.url) {
-      var watch = el("a", "modal__watch");
+      var watch = el("a", "modal__watch", t("modal.watch") + " ");
       watch.href = p.video.url;
       watch.target = "_blank";
       watch.rel = "noopener";
-      watch.innerHTML = "Video not playing? Watch it on Canva " + ARROW_ICON;
+      watch.insertAdjacentHTML("beforeend", ARROW_ICON);
       modalContent.appendChild(watch);
     }
 
     var body = el("div", "modal__body");
-    body.appendChild(el("p", "modal__cat", p.category));
-    var title = el("h2", "modal__title", p.title);
+    body.appendChild(el("p", "modal__cat", categoryLabel(p.category)));
+    var title = el("h2", "modal__title", tr(p.title));
     title.id = "modal-title";
     body.appendChild(title);
 
-    if (p.problem) body.appendChild(section("The challenge", el("p", null, p.problem)));
+    if (p.problem) body.appendChild(section(t("modal.challenge"), el("p", null, tr(p.problem))));
 
-    if (p.approach && p.approach.length) {
+    var steps = tr(p.approach);
+    if (steps && steps.length) {
       var list = el("ol", "modal__steps");
-      p.approach.forEach(function (step) { list.appendChild(el("li", null, step)); });
-      body.appendChild(section("What I did", list));
+      steps.forEach(function (step) { list.appendChild(el("li", null, step)); });
+      body.appendChild(section(t("modal.approach"), list));
     }
 
-    if (p.result) body.appendChild(section("The result", el("p", null, p.result)));
+    if (p.result) body.appendChild(section(t("modal.result"), el("p", null, tr(p.result))));
 
     if (p.tools && p.tools.length) {
       var tagList = el("ul", "tags");
-      p.tools.forEach(function (t) { tagList.appendChild(el("li", "tag", t)); });
-      body.appendChild(section("Tools", tagList));
+      p.tools.forEach(function (tool) { tagList.appendChild(el("li", "tag", tr(tool))); });
+      body.appendChild(section(t("modal.tools"), tagList));
     }
 
     if (p.gallery && p.gallery.length) {
@@ -546,40 +635,41 @@
         (group.images || []).forEach(function (im) {
           var img = el("img");
           img.src = im.src;
-          img.alt = im.alt || "";
+          img.alt = tr(im.alt) || "";
           img.loading = "lazy";
           img.decoding = "async";
           strip.appendChild(img);
         });
         g.appendChild(strip);
         var cap = el("figcaption", "gallery__caption");
-        cap.appendChild(el("strong", null, group.title));
-        if (group.note) cap.appendChild(el("span", null, group.note));
+        var groupTitle = tr(group.title);
+        cap.appendChild(el("strong", null, groupTitle));
+        if (group.note) cap.appendChild(el("span", null, tr(group.note)));
         if (group.url) {
-          var view = el("a", "gallery__link");
+          var view = el("a", "gallery__link", t("modal.viewCanva") + " ");
           view.href = group.url;
           view.target = "_blank";
           view.rel = "noopener";
-          view.innerHTML = "View full design on Canva " + ARROW_ICON;
-          view.setAttribute("aria-label", "View " + group.title + " on Canva (opens in a new tab)");
+          view.insertAdjacentHTML("beforeend", ARROW_ICON);
+          view.setAttribute("aria-label", t("modal.viewCanvaLabel").replace("{title}", groupTitle));
           cap.appendChild(view);
         }
         g.appendChild(cap);
         gallery.appendChild(g);
       });
-      body.appendChild(section(p.galleryTitle || "Made with this pipeline", gallery));
+      body.appendChild(section(tr(p.galleryTitle) || t("modal.gallery"), gallery));
     }
 
     if (p.links && p.links.length) {
       var links = el("div", "modal__links");
       p.links.forEach(function (l) {
-        var a = el("a", "btn btn--ghost btn--sm", l.label);
+        var a = el("a", "btn btn--ghost btn--sm", tr(l.label));
         a.href = l.url;
         a.target = "_blank";
         a.rel = "noopener";
         links.appendChild(a);
       });
-      body.appendChild(section("Links", links));
+      body.appendChild(section(t("modal.links"), links));
     }
 
     modalContent.appendChild(body);
@@ -625,4 +715,27 @@
   document.querySelectorAll("[data-year]").forEach(function (n) {
     n.textContent = String(new Date().getFullYear());
   });
+
+  /* ---------- Language toggle (EN / ID), no reload ---------- */
+  function setLang(next) {
+    lang = next;
+    translatePage();
+    wrapWords();
+    applyTheme(root.getAttribute("data-theme") || "light");
+    if (navToggle) navToggle.setAttribute("aria-label", t(navToggle.getAttribute("aria-expanded") === "true" ? "menu.close" : "menu.open"));
+    renderProjects();
+    marqueeRows.forEach(fillMarquee);
+    buildRoad();
+    update();
+  }
+
+  if (langBtn) {
+    langBtn.addEventListener("click", function () {
+      var next = lang === "en" ? "id" : "en";
+      setLang(next);
+      storageSet("lang", next);
+    });
+  }
+
+  root.classList.remove("lang-pending");
 })();
